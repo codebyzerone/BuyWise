@@ -1,0 +1,82 @@
+{
+  "id": "BW-IN-012",
+  "brand": "HP",
+  "model": "Victus Gaming Laptop 15-fb3385AX",
+  "category": "laptop",
+  "pricing": {
+    "currency": "INR",
+    "currentPrice": 119999,
+    "originalPrice": 255395,
+    "source": "HP India Store",
+    "url": "https://www.hp.com/in-en/shop/products/laptops/victus-gaming-laptop-15-fb3385ax-e20rqpa-acj",
+    "checkedAt": "2026-09-19"
+  },
+  "offers": [],
+  "cpu": {
+    "brand": "AMD",
+    "model": "Ryzen 7 7445H",
+    "generation": null,
+    "cores": null,
+    "threads": null,
+    "baseClockGHz": null,
+    "boostClockGHz": null
+  },
+  "gpu": {
+    "model": "RTX 4050",
+    "tier": "mid-range",
+    "vramGb": 6,
+    "tgpW": null
+  },
+  "ram": {
+    "capacityGb": 16,
+    "type": null,
+    "speedMHz": null,
+    "slots": null,
+    "upgradeable": null,
+    "maximumSupportedGb": null
+  },
+  "storage": {
+    "capacityGb": 512,
+    "type": "SSD",
+    "slots": null,
+    "upgradeable": null
+  },
+  "display": {
+    "sizeInches": 15.6,
+    "resolution": "1920x1080",
+    "panel": null,
+    "refreshRateHz": 144,
+    "brightnessNits": null,
+    "colorGamut": null,
+    "tier": "high-refresh"
+  },
+  "battery": {
+    "capacityWh": null
+  },
+  "physical": {
+    "weightKg": null,
+    "thicknessMm": null
+  },
+  "connectivity": {
+    "wifi": null,
+    "bluetooth": null
+  },
+  "ports": [],
+  "os": "windows",
+  "webcam": {
+    "resolution": null
+  },
+  "keyboard": {
+    "backlit": null,
+    "numpad": null
+  },
+  "upgradeability": {
+    "ram": null,
+    "storage": null
+  },
+  "source": {
+    "retailer": "HP India Store",
+    "productUrl": "https://www.hp.com/in-en/shop/products/laptops/victus-gaming-laptop-15-fb3385ax-e20rqpa-acj",
+    "lastChecked": "2026-09-19"
+  }
+}

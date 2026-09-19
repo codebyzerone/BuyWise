@@ -1,0 +1,218 @@
+{
+  "M": {
+    "id": {
+      "S": "BW-IN-013"
+    },
+    "brand": {
+      "S": "Acer"
+    },
+    "model": {
+      "S": "Nitro V ANV15-51"
+    },
+    "category": {
+      "S": "laptop"
+    },
+    "pricing": {
+      "M": {
+        "currency": {
+          "S": "INR"
+        },
+        "currentPrice": {
+          "N": "106990"
+        },
+        "originalPrice": {
+          "NULL": true
+        },
+        "source": {
+          "S": "Acer India Store"
+        },
+        "url": {
+          "S": "https://store.acer.com/en-in/acer-nitro-v-intel-core-i5-13420h-processor-laptop-windows-11-home-1-16-gb-ram-1-tb-ssd-nvidia-geforce-rtxtm-4050-with-6-gb-of-dedicated-gddr6-vram-anv15-51-with-39-6-cm-15-6-ips-full-hd-display-keyboard-obsidian-black-2-113-kg"
+        },
+        "checkedAt": {
+          "S": "2026-09-19"
+        }
+      }
+    },
+    "offers": {
+      "NULL": true
+    },
+    "cpu": {
+      "M": {
+        "brand": {
+          "S": "Intel"
+        },
+        "model": {
+          "S": "Intel Core i5-13420H"
+        },
+        "generation": {
+          "NULL": true
+        },
+        "cores": {
+          "NULL": true
+        },
+        "threads": {
+          "NULL": true
+        },
+        "baseClockGHz": {
+          "NULL": true
+        },
+        "boostClockGHz": {
+          "NULL": true
+        }
+      }
+    },
+    "gpu": {
+      "M": {
+        "model": {
+          "S": "RTX 4050"
+        },
+        "tier": {
+          "S": "mid-range"
+        },
+        "vramGb": {
+          "N": "6"
+        },
+        "tgpW": {
+          "NULL": true
+        }
+      }
+    },
+    "ram": {
+      "M": {
+        "capacityGb": {
+          "N": "16"
+        },
+        "type": {
+          "NULL": true
+        },
+        "speedMHz": {
+          "NULL": true
+        },
+        "slots": {
+          "NULL": true
+        },
+        "upgradeable": {
+          "NULL": true
+        },
+        "maximumSupportedGb": {
+          "NULL": true
+        }
+      }
+    },
+    "storage": {
+      "M": {
+        "capacityGb": {
+          "N": "1024"
+        },
+        "type": {
+          "S": "SSD"
+        },
+        "slots": {
+          "NULL": true
+        },
+        "upgradeable": {
+          "NULL": true
+        }
+      }
+    },
+    "display": {
+      "M": {
+        "sizeInches": {
+          "N": "15.6"
+        },
+        "resolution": {
+          "NULL": true
+        },
+        "panel": {
+          "S": "IPS"
+        },
+        "refreshRateHz": {
+          "NULL": true
+        },
+        "brightnessNits": {
+          "NULL": true
+        },
+        "colorGamut": {
+          "NULL": true
+        },
+        "tier": {
+          "NULL": true
+        }
+      }
+    },
+    "battery": {
+      "M": {
+        "capacityWh": {
+          "NULL": true
+        }
+      }
+    },
+    "physical": {
+      "M": {
+        "weightKg": {
+          "N": "2.113"
+        },
+        "thicknessMm": {
+          "NULL": true
+        }
+      }
+    },
+    "connectivity": {
+      "M": {
+        "wifi": {
+          "NULL": true
+        },
+        "bluetooth": {
+          "NULL": true
+        }
+      }
+    },
+    "ports": {
+      "NULL": true
+    },
+    "os": {
+      "S": "windows"
+    },
+    "webcam": {
+      "M": {
+        "resolution": {
+          "NULL": true
+        }
+      }
+    },
+    "keyboard": {
+      "M": {
+        "backlit": {
+          "NULL": true
+        },
+        "numpad": {
+          "NULL": true
+        }
+      }
+    },
+    "upgradeability": {
+      "M": {
+        "ram": {
+          "NULL": true
+        },
+        "storage": {
+          "NULL": true
+        }
+      }
+    },
+    "source": {
+      "M": {
+        "retailer": {
+          "S": "Acer India Store"
+        },
+        "productUrl": {
+          "S": "https://store.acer.com/en-in/acer-nitro-v-intel-core-i5-13420h-processor-laptop-windows-11-home-1-16-gb-ram-1-tb-ssd-nvidia-geforce-rtxtm-4050-with-6-gb-of-dedicated-gddr6-vram-anv15-51-with-39-6-cm-15-6-ips-full-hd-display-keyboard-obsidian-black-2-113-kg"
+        },
+        "lastChecked": {
+          "S": "2026-09-19"
+        }
+      }
+    }
+  }
+}

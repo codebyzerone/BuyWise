@@ -1,0 +1,82 @@
+{
+  "id": "BW-IN-005",
+  "brand": "Lenovo",
+  "model": "IdeaPad Slim 5 14IRH10 (83HR000WIN)",
+  "category": "laptop",
+  "pricing": {
+    "currency": "INR",
+    "currentPrice": 73991,
+    "originalPrice": 97291,
+    "source": "Lenovo India Store",
+    "url": "https://store.lenovo.com/in/en/nb-ip-slim-5-14irh10-i5-16g-1t-11s-83hr000win-393.html",
+    "checkedAt": "2026-09-19"
+  },
+  "offers": [],
+  "cpu": {
+    "brand": "Intel",
+    "model": "Core i5-13420H",
+    "generation": "13th Gen",
+    "cores": null,
+    "threads": null,
+    "baseClockGHz": null,
+    "boostClockGHz": 4.6
+  },
+  "gpu": {
+    "model": "Intel UHD Graphics (integrated)",
+    "tier": "integrated",
+    "vramGb": null,
+    "tgpW": null
+  },
+  "ram": {
+    "capacityGb": 16,
+    "type": "DDR5",
+    "speedMHz": null,
+    "slots": null,
+    "upgradeable": null,
+    "maximumSupportedGb": null
+  },
+  "storage": {
+    "capacityGb": 1024,
+    "type": "SSD",
+    "slots": null,
+    "upgradeable": null
+  },
+  "display": {
+    "sizeInches": null,
+    "resolution": "1920x1200",
+    "panel": "OLED",
+    "refreshRateHz": 60,
+    "brightnessNits": null,
+    "colorGamut": null,
+    "tier": "oled"
+  },
+  "battery": {
+    "capacityWh": 60
+  },
+  "physical": {
+    "weightKg": 1.49,
+    "thicknessMm": null
+  },
+  "connectivity": {
+    "wifi": null,
+    "bluetooth": null
+  },
+  "ports": [],
+  "os": "windows",
+  "webcam": {
+    "resolution": "1080p"
+  },
+  "keyboard": {
+    "backlit": true,
+    "numpad": null
+  },
+  "upgradeability": {
+    "ram": null,
+    "storage": null
+  },
+  "source": {
+    "retailer": "Lenovo India Store",
+    "productUrl": "https://store.lenovo.com/in/en/nb-ip-slim-5-14irh10-i5-16g-1t-11s-83hr000win-393.html",
+    "lastChecked": "2026-09-19"
+  }
+}

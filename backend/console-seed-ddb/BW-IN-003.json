@@ -1,0 +1,218 @@
+{
+  "M": {
+    "id": {
+      "S": "BW-IN-003"
+    },
+    "brand": {
+      "S": "Apple"
+    },
+    "model": {
+      "S": "MacBook Air 13-inch M2 (8GB/256GB)"
+    },
+    "category": {
+      "S": "laptop"
+    },
+    "pricing": {
+      "M": {
+        "currency": {
+          "S": "INR"
+        },
+        "currentPrice": {
+          "N": "57999"
+        },
+        "originalPrice": {
+          "NULL": true
+        },
+        "source": {
+          "S": "Smartprix (price tracker)"
+        },
+        "url": {
+          "S": "https://www.smartprix.com/laptops/apple-macbook-air-2022-laptop-apple-m2-8gb-ppd1legzqinv"
+        },
+        "checkedAt": {
+          "S": "2026-09-19"
+        }
+      }
+    },
+    "offers": {
+      "NULL": true
+    },
+    "cpu": {
+      "M": {
+        "brand": {
+          "S": "Apple"
+        },
+        "model": {
+          "S": "Apple M2"
+        },
+        "generation": {
+          "NULL": true
+        },
+        "cores": {
+          "NULL": true
+        },
+        "threads": {
+          "NULL": true
+        },
+        "baseClockGHz": {
+          "NULL": true
+        },
+        "boostClockGHz": {
+          "NULL": true
+        }
+      }
+    },
+    "gpu": {
+      "M": {
+        "model": {
+          "NULL": true
+        },
+        "tier": {
+          "NULL": true
+        },
+        "vramGb": {
+          "NULL": true
+        },
+        "tgpW": {
+          "NULL": true
+        }
+      }
+    },
+    "ram": {
+      "M": {
+        "capacityGb": {
+          "N": "8"
+        },
+        "type": {
+          "NULL": true
+        },
+        "speedMHz": {
+          "NULL": true
+        },
+        "slots": {
+          "NULL": true
+        },
+        "upgradeable": {
+          "NULL": true
+        },
+        "maximumSupportedGb": {
+          "NULL": true
+        }
+      }
+    },
+    "storage": {
+      "M": {
+        "capacityGb": {
+          "N": "256"
+        },
+        "type": {
+          "S": "SSD"
+        },
+        "slots": {
+          "NULL": true
+        },
+        "upgradeable": {
+          "NULL": true
+        }
+      }
+    },
+    "display": {
+      "M": {
+        "sizeInches": {
+          "NULL": true
+        },
+        "resolution": {
+          "NULL": true
+        },
+        "panel": {
+          "NULL": true
+        },
+        "refreshRateHz": {
+          "NULL": true
+        },
+        "brightnessNits": {
+          "NULL": true
+        },
+        "colorGamut": {
+          "NULL": true
+        },
+        "tier": {
+          "NULL": true
+        }
+      }
+    },
+    "battery": {
+      "M": {
+        "capacityWh": {
+          "NULL": true
+        }
+      }
+    },
+    "physical": {
+      "M": {
+        "weightKg": {
+          "NULL": true
+        },
+        "thicknessMm": {
+          "NULL": true
+        }
+      }
+    },
+    "connectivity": {
+      "M": {
+        "wifi": {
+          "NULL": true
+        },
+        "bluetooth": {
+          "NULL": true
+        }
+      }
+    },
+    "ports": {
+      "NULL": true
+    },
+    "os": {
+      "S": "macos"
+    },
+    "webcam": {
+      "M": {
+        "resolution": {
+          "NULL": true
+        }
+      }
+    },
+    "keyboard": {
+      "M": {
+        "backlit": {
+          "NULL": true
+        },
+        "numpad": {
+          "NULL": true
+        }
+      }
+    },
+    "upgradeability": {
+      "M": {
+        "ram": {
+          "NULL": true
+        },
+        "storage": {
+          "NULL": true
+        }
+      }
+    },
+    "source": {
+      "M": {
+        "retailer": {
+          "S": "Smartprix (price tracker)"
+        },
+        "productUrl": {
+          "S": "https://www.smartprix.com/laptops/apple-macbook-air-2022-laptop-apple-m2-8gb-ppd1legzqinv"
+        },
+        "lastChecked": {
+          "S": "2026-09-19"
+        }
+      }
+    }
+  }
+}

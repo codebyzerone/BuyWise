@@ -1,0 +1,82 @@
+{
+  "id": "BW-IN-003",
+  "brand": "Apple",
+  "model": "MacBook Air 13-inch M2 (8GB/256GB)",
+  "category": "laptop",
+  "pricing": {
+    "currency": "INR",
+    "currentPrice": 57999,
+    "originalPrice": null,
+    "source": "Smartprix (price tracker)",
+    "url": "https://www.smartprix.com/laptops/apple-macbook-air-2022-laptop-apple-m2-8gb-ppd1legzqinv",
+    "checkedAt": "2026-09-19"
+  },
+  "offers": [],
+  "cpu": {
+    "brand": "Apple",
+    "model": "Apple M2",
+    "generation": null,
+    "cores": null,
+    "threads": null,
+    "baseClockGHz": null,
+    "boostClockGHz": null
+  },
+  "gpu": {
+    "model": null,
+    "tier": null,
+    "vramGb": null,
+    "tgpW": null
+  },
+  "ram": {
+    "capacityGb": 8,
+    "type": null,
+    "speedMHz": null,
+    "slots": null,
+    "upgradeable": null,
+    "maximumSupportedGb": null
+  },
+  "storage": {
+    "capacityGb": 256,
+    "type": "SSD",
+    "slots": null,
+    "upgradeable": null
+  },
+  "display": {
+    "sizeInches": null,
+    "resolution": null,
+    "panel": null,
+    "refreshRateHz": null,
+    "brightnessNits": null,
+    "colorGamut": null,
+    "tier": null
+  },
+  "battery": {
+    "capacityWh": null
+  },
+  "physical": {
+    "weightKg": null,
+    "thicknessMm": null
+  },
+  "connectivity": {
+    "wifi": null,
+    "bluetooth": null
+  },
+  "ports": [],
+  "os": "macos",
+  "webcam": {
+    "resolution": null
+  },
+  "keyboard": {
+    "backlit": null,
+    "numpad": null
+  },
+  "upgradeability": {
+    "ram": null,
+    "storage": null
+  },
+  "source": {
+    "retailer": "Smartprix (price tracker)",
+    "productUrl": "https://www.smartprix.com/laptops/apple-macbook-air-2022-laptop-apple-m2-8gb-ppd1legzqinv",
+    "lastChecked": "2026-09-19"
+  }
+}

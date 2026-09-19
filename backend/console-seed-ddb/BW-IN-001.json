@@ -1,0 +1,218 @@
+{
+  "M": {
+    "id": {
+      "S": "BW-IN-001"
+    },
+    "brand": {
+      "S": "Acer"
+    },
+    "model": {
+      "S": "Aspire Lite AL15-53"
+    },
+    "category": {
+      "S": "laptop"
+    },
+    "pricing": {
+      "M": {
+        "currency": {
+          "S": "INR"
+        },
+        "currentPrice": {
+          "N": "54990"
+        },
+        "originalPrice": {
+          "NULL": true
+        },
+        "source": {
+          "S": "Flipkart"
+        },
+        "url": {
+          "S": "https://www.flipkart.com/acer-aspire-lite-intel-core-i3-13th-gen-1305u-16-gb-512-gb-ssd-windows-11-home-al15-53-thin-and-light-laptop/p/itmb2b6ffaf3b25b"
+        },
+        "checkedAt": {
+          "S": "2026-09-19"
+        }
+      }
+    },
+    "offers": {
+      "NULL": true
+    },
+    "cpu": {
+      "M": {
+        "brand": {
+          "S": "Intel"
+        },
+        "model": {
+          "S": "Intel Core i3-1305U"
+        },
+        "generation": {
+          "NULL": true
+        },
+        "cores": {
+          "NULL": true
+        },
+        "threads": {
+          "NULL": true
+        },
+        "baseClockGHz": {
+          "NULL": true
+        },
+        "boostClockGHz": {
+          "NULL": true
+        }
+      }
+    },
+    "gpu": {
+      "M": {
+        "model": {
+          "NULL": true
+        },
+        "tier": {
+          "NULL": true
+        },
+        "vramGb": {
+          "NULL": true
+        },
+        "tgpW": {
+          "NULL": true
+        }
+      }
+    },
+    "ram": {
+      "M": {
+        "capacityGb": {
+          "N": "16"
+        },
+        "type": {
+          "NULL": true
+        },
+        "speedMHz": {
+          "NULL": true
+        },
+        "slots": {
+          "NULL": true
+        },
+        "upgradeable": {
+          "NULL": true
+        },
+        "maximumSupportedGb": {
+          "NULL": true
+        }
+      }
+    },
+    "storage": {
+      "M": {
+        "capacityGb": {
+          "N": "512"
+        },
+        "type": {
+          "S": "SSD"
+        },
+        "slots": {
+          "NULL": true
+        },
+        "upgradeable": {
+          "NULL": true
+        }
+      }
+    },
+    "display": {
+      "M": {
+        "sizeInches": {
+          "NULL": true
+        },
+        "resolution": {
+          "NULL": true
+        },
+        "panel": {
+          "NULL": true
+        },
+        "refreshRateHz": {
+          "NULL": true
+        },
+        "brightnessNits": {
+          "NULL": true
+        },
+        "colorGamut": {
+          "NULL": true
+        },
+        "tier": {
+          "NULL": true
+        }
+      }
+    },
+    "battery": {
+      "M": {
+        "capacityWh": {
+          "NULL": true
+        }
+      }
+    },
+    "physical": {
+      "M": {
+        "weightKg": {
+          "NULL": true
+        },
+        "thicknessMm": {
+          "NULL": true
+        }
+      }
+    },
+    "connectivity": {
+      "M": {
+        "wifi": {
+          "NULL": true
+        },
+        "bluetooth": {
+          "NULL": true
+        }
+      }
+    },
+    "ports": {
+      "NULL": true
+    },
+    "os": {
+      "S": "windows"
+    },
+    "webcam": {
+      "M": {
+        "resolution": {
+          "NULL": true
+        }
+      }
+    },
+    "keyboard": {
+      "M": {
+        "backlit": {
+          "NULL": true
+        },
+        "numpad": {
+          "NULL": true
+        }
+      }
+    },
+    "upgradeability": {
+      "M": {
+        "ram": {
+          "NULL": true
+        },
+        "storage": {
+          "NULL": true
+        }
+      }
+    },
+    "source": {
+      "M": {
+        "retailer": {
+          "S": "Flipkart"
+        },
+        "productUrl": {
+          "S": "https://www.flipkart.com/acer-aspire-lite-intel-core-i3-13th-gen-1305u-16-gb-512-gb-ssd-windows-11-home-al15-53-thin-and-light-laptop/p/itmb2b6ffaf3b25b"
+        },
+        "lastChecked": {
+          "S": "2026-09-19"
+        }
+      }
+    }
+  }
+}

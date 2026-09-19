@@ -1,0 +1,218 @@
+{
+  "M": {
+    "id": {
+      "S": "BW-IN-021"
+    },
+    "brand": {
+      "S": "Lenovo"
+    },
+    "model": {
+      "S": "Legion 5 16IRX9 (83DG009DIN)"
+    },
+    "category": {
+      "S": "laptop"
+    },
+    "pricing": {
+      "M": {
+        "currency": {
+          "S": "INR"
+        },
+        "currentPrice": {
+          "N": "172491"
+        },
+        "originalPrice": {
+          "N": "238591"
+        },
+        "source": {
+          "S": "Lenovo India Store"
+        },
+        "url": {
+          "S": "https://store.lenovo.com/in/en/nb-ln-legion-5-16irx9-i7-16g-1t-11s-83dg009din-375.html"
+        },
+        "checkedAt": {
+          "S": "2026-09-19"
+        }
+      }
+    },
+    "offers": {
+      "NULL": true
+    },
+    "cpu": {
+      "M": {
+        "brand": {
+          "S": "Intel"
+        },
+        "model": {
+          "S": "Core i7-14650HX"
+        },
+        "generation": {
+          "S": "14th Gen"
+        },
+        "cores": {
+          "NULL": true
+        },
+        "threads": {
+          "NULL": true
+        },
+        "baseClockGHz": {
+          "NULL": true
+        },
+        "boostClockGHz": {
+          "N": "5.2"
+        }
+      }
+    },
+    "gpu": {
+      "M": {
+        "model": {
+          "S": "RTX 4070"
+        },
+        "tier": {
+          "S": "high-performance"
+        },
+        "vramGb": {
+          "N": "8"
+        },
+        "tgpW": {
+          "NULL": true
+        }
+      }
+    },
+    "ram": {
+      "M": {
+        "capacityGb": {
+          "N": "16"
+        },
+        "type": {
+          "S": "DDR5"
+        },
+        "speedMHz": {
+          "N": "5600"
+        },
+        "slots": {
+          "NULL": true
+        },
+        "upgradeable": {
+          "NULL": true
+        },
+        "maximumSupportedGb": {
+          "NULL": true
+        }
+      }
+    },
+    "storage": {
+      "M": {
+        "capacityGb": {
+          "N": "1024"
+        },
+        "type": {
+          "S": "SSD"
+        },
+        "slots": {
+          "NULL": true
+        },
+        "upgradeable": {
+          "NULL": true
+        }
+      }
+    },
+    "display": {
+      "M": {
+        "sizeInches": {
+          "NULL": true
+        },
+        "resolution": {
+          "S": "2560x1600"
+        },
+        "panel": {
+          "S": "IPS"
+        },
+        "refreshRateHz": {
+          "N": "165"
+        },
+        "brightnessNits": {
+          "NULL": true
+        },
+        "colorGamut": {
+          "NULL": true
+        },
+        "tier": {
+          "S": "high-refresh"
+        }
+      }
+    },
+    "battery": {
+      "M": {
+        "capacityWh": {
+          "N": "80"
+        }
+      }
+    },
+    "physical": {
+      "M": {
+        "weightKg": {
+          "NULL": true
+        },
+        "thicknessMm": {
+          "NULL": true
+        }
+      }
+    },
+    "connectivity": {
+      "M": {
+        "wifi": {
+          "S": "Wi-Fi 6E"
+        },
+        "bluetooth": {
+          "S": "Bluetooth 5.1"
+        }
+      }
+    },
+    "ports": {
+      "NULL": true
+    },
+    "os": {
+      "S": "windows"
+    },
+    "webcam": {
+      "M": {
+        "resolution": {
+          "S": "1080p"
+        }
+      }
+    },
+    "keyboard": {
+      "M": {
+        "backlit": {
+          "BOOL": true
+        },
+        "numpad": {
+          "NULL": true
+        }
+      }
+    },
+    "upgradeability": {
+      "M": {
+        "ram": {
+          "NULL": true
+        },
+        "storage": {
+          "NULL": true
+        }
+      }
+    },
+    "source": {
+      "M": {
+        "retailer": {
+          "S": "Lenovo India Store"
+        },
+        "productUrl": {
+          "S": "https://store.lenovo.com/in/en/nb-ln-legion-5-16irx9-i7-16g-1t-11s-83dg009din-375.html"
+        },
+        "lastChecked": {
+          "S": "2026-09-19"
+        }
+      }
+    }
+  }
+}

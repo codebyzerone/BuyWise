@@ -1,0 +1,82 @@
+{
+  "id": "BW-IN-007",
+  "brand": "HP",
+  "model": "Pavilion 14-dv2041TU",
+  "category": "laptop",
+  "pricing": {
+    "currency": "INR",
+    "currentPrice": 75414,
+    "originalPrice": null,
+    "source": "Flipkart",
+    "url": "https://www.flipkart.com/hp-pavilion-core-i5-12th-gen-1235u-16-gb-512-gb-ssd-windows-11-home-14-dv2041tu-thin-light-laptop/p/itm3d8077f046b32",
+    "checkedAt": "2026-09-19"
+  },
+  "offers": [],
+  "cpu": {
+    "brand": "Intel",
+    "model": "Intel Core i5-1235U",
+    "generation": null,
+    "cores": null,
+    "threads": null,
+    "baseClockGHz": null,
+    "boostClockGHz": null
+  },
+  "gpu": {
+    "model": null,
+    "tier": null,
+    "vramGb": null,
+    "tgpW": null
+  },
+  "ram": {
+    "capacityGb": 16,
+    "type": null,
+    "speedMHz": null,
+    "slots": null,
+    "upgradeable": null,
+    "maximumSupportedGb": null
+  },
+  "storage": {
+    "capacityGb": 512,
+    "type": "SSD",
+    "slots": null,
+    "upgradeable": null
+  },
+  "display": {
+    "sizeInches": 14,
+    "resolution": null,
+    "panel": null,
+    "refreshRateHz": null,
+    "brightnessNits": null,
+    "colorGamut": null,
+    "tier": null
+  },
+  "battery": {
+    "capacityWh": null
+  },
+  "physical": {
+    "weightKg": null,
+    "thicknessMm": null
+  },
+  "connectivity": {
+    "wifi": null,
+    "bluetooth": null
+  },
+  "ports": [],
+  "os": "windows",
+  "webcam": {
+    "resolution": null
+  },
+  "keyboard": {
+    "backlit": null,
+    "numpad": null
+  },
+  "upgradeability": {
+    "ram": null,
+    "storage": null
+  },
+  "source": {
+    "retailer": "Flipkart",
+    "productUrl": "https://www.flipkart.com/hp-pavilion-core-i5-12th-gen-1235u-16-gb-512-gb-ssd-windows-11-home-14-dv2041tu-thin-light-laptop/p/itm3d8077f046b32",
+    "lastChecked": "2026-09-19"
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "id": "BW-IN-018",
+  "brand": "Apple",
+  "model": "MacBook Air 13-inch M5 (16GB/512GB) MDH74HN/A",
+  "category": "laptop",
+  "pricing": {
+    "currency": "INR",
+    "currentPrice": 119900,
+    "originalPrice": null,
+    "source": "Flipkart",
+    "url": "https://www.flipkart.com/apple-macbook-air-m5-13-6-inch-liquid-retina-display-m5-16gb-memory-512gb-ssd-midnight/p/itmd76ea2d7ba3f25?pid=COMHGRAVHFT7XCH2",
+    "checkedAt": "2026-09-19"
+  },
+  "offers": [],
+  "cpu": {
+    "brand": "Apple",
+    "model": "Apple M5",
+    "generation": null,
+    "cores": null,
+    "threads": null,
+    "baseClockGHz": null,
+    "boostClockGHz": null
+  },
+  "gpu": {
+    "model": null,
+    "tier": null,
+    "vramGb": null,
+    "tgpW": null
+  },
+  "ram": {
+    "capacityGb": 16,
+    "type": null,
+    "speedMHz": null,
+    "slots": null,
+    "upgradeable": null,
+    "maximumSupportedGb": null
+  },
+  "storage": {
+    "capacityGb": 512,
+    "type": "SSD",
+    "slots": null,
+    "upgradeable": null
+  },
+  "display": {
+    "sizeInches": null,
+    "resolution": null,
+    "panel": null,
+    "refreshRateHz": null,
+    "brightnessNits": null,
+    "colorGamut": null,
+    "tier": null
+  },
+  "battery": {
+    "capacityWh": null
+  },
+  "physical": {
+    "weightKg": null,
+    "thicknessMm": null
+  },
+  "connectivity": {
+    "wifi": null,
+    "bluetooth": null
+  },
+  "ports": [],
+  "os": "macos",
+  "webcam": {
+    "resolution": null
+  },
+  "keyboard": {
+    "backlit": null,
+    "numpad": null
+  },
+  "upgradeability": {
+    "ram": null,
+    "storage": null
+  },
+  "source": {
+    "retailer": "Flipkart",
+    "productUrl": "https://www.flipkart.com/apple-macbook-air-m5-13-6-inch-liquid-retina-display-m5-16gb-memory-512gb-ssd-midnight/p/itmd76ea2d7ba3f25?pid=COMHGRAVHFT7XCH2",
+    "lastChecked": "2026-09-19"
+  }
+}

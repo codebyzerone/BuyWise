@@ -1,0 +1,82 @@
+{
+  "id": "BW-IN-014",
+  "brand": "MSI",
+  "model": "Cyborg 15 AI A1VEK-051IN",
+  "category": "laptop",
+  "pricing": {
+    "currency": "INR",
+    "currentPrice": 111990,
+    "originalPrice": null,
+    "source": "Flipkart",
+    "url": "https://www.flipkart.com/msi-cyborg-15-ai-intel-core-ultra-5-125h-16-gb-1-tb-ssd-windows-11-home-nvidia-geforce-rtx-4050-a1vek-051in-gaming-laptop/p/itmbfa35c5be1a7b",
+    "checkedAt": "2026-09-19"
+  },
+  "offers": [],
+  "cpu": {
+    "brand": "Intel",
+    "model": "Intel Core Ultra 5 125H",
+    "generation": null,
+    "cores": null,
+    "threads": null,
+    "baseClockGHz": null,
+    "boostClockGHz": null
+  },
+  "gpu": {
+    "model": "RTX 4050",
+    "tier": "mid-range",
+    "vramGb": 6,
+    "tgpW": null
+  },
+  "ram": {
+    "capacityGb": 16,
+    "type": null,
+    "speedMHz": null,
+    "slots": null,
+    "upgradeable": null,
+    "maximumSupportedGb": null
+  },
+  "storage": {
+    "capacityGb": 1024,
+    "type": "SSD",
+    "slots": null,
+    "upgradeable": null
+  },
+  "display": {
+    "sizeInches": null,
+    "resolution": null,
+    "panel": null,
+    "refreshRateHz": null,
+    "brightnessNits": null,
+    "colorGamut": null,
+    "tier": null
+  },
+  "battery": {
+    "capacityWh": null
+  },
+  "physical": {
+    "weightKg": null,
+    "thicknessMm": null
+  },
+  "connectivity": {
+    "wifi": null,
+    "bluetooth": null
+  },
+  "ports": [],
+  "os": "windows",
+  "webcam": {
+    "resolution": null
+  },
+  "keyboard": {
+    "backlit": null,
+    "numpad": null
+  },
+  "upgradeability": {
+    "ram": null,
+    "storage": null
+  },
+  "source": {
+    "retailer": "Flipkart",
+    "productUrl": "https://www.flipkart.com/msi-cyborg-15-ai-intel-core-ultra-5-125h-16-gb-1-tb-ssd-windows-11-home-nvidia-geforce-rtx-4050-a1vek-051in-gaming-laptop/p/itmbfa35c5be1a7b",
+    "lastChecked": "2026-09-19"
+  }
+}

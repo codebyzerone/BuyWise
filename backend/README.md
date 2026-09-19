@@ -104,7 +104,10 @@ node scripts/smoke.mjs https://<api-id>.execute-api.<region>.amazonaws.com/prod/
 
 ## Deploy to AWS
 
-Prerequisites: AWS CLI v2 configured (`aws configure`), Node.js.
+Full click-by-click AWS Console guide (no CLI needed):
+`docs/aws-console-deployment.md`
+
+CLI alternative (needs AWS CLI + credentials):
 
 ```powershell
 cd backend

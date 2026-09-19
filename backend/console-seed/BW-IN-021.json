@@ -1,0 +1,82 @@
+{
+  "id": "BW-IN-021",
+  "brand": "Lenovo",
+  "model": "Legion 5 16IRX9 (83DG009DIN)",
+  "category": "laptop",
+  "pricing": {
+    "currency": "INR",
+    "currentPrice": 172491,
+    "originalPrice": 238591,
+    "source": "Lenovo India Store",
+    "url": "https://store.lenovo.com/in/en/nb-ln-legion-5-16irx9-i7-16g-1t-11s-83dg009din-375.html",
+    "checkedAt": "2026-09-19"
+  },
+  "offers": [],
+  "cpu": {
+    "brand": "Intel",
+    "model": "Core i7-14650HX",
+    "generation": "14th Gen",
+    "cores": null,
+    "threads": null,
+    "baseClockGHz": null,
+    "boostClockGHz": 5.2
+  },
+  "gpu": {
+    "model": "RTX 4070",
+    "tier": "high-performance",
+    "vramGb": 8,
+    "tgpW": null
+  },
+  "ram": {
+    "capacityGb": 16,
+    "type": "DDR5",
+    "speedMHz": 5600,
+    "slots": null,
+    "upgradeable": null,
+    "maximumSupportedGb": null
+  },
+  "storage": {
+    "capacityGb": 1024,
+    "type": "SSD",
+    "slots": null,
+    "upgradeable": null
+  },
+  "display": {
+    "sizeInches": null,
+    "resolution": "2560x1600",
+    "panel": "IPS",
+    "refreshRateHz": 165,
+    "brightnessNits": null,
+    "colorGamut": null,
+    "tier": "high-refresh"
+  },
+  "battery": {
+    "capacityWh": 80
+  },
+  "physical": {
+    "weightKg": null,
+    "thicknessMm": null
+  },
+  "connectivity": {
+    "wifi": "Wi-Fi 6E",
+    "bluetooth": "Bluetooth 5.1"
+  },
+  "ports": [],
+  "os": "windows",
+  "webcam": {
+    "resolution": "1080p"
+  },
+  "keyboard": {
+    "backlit": true,
+    "numpad": null
+  },
+  "upgradeability": {
+    "ram": null,
+    "storage": null
+  },
+  "source": {
+    "retailer": "Lenovo India Store",
+    "productUrl": "https://store.lenovo.com/in/en/nb-ln-legion-5-16irx9-i7-16g-1t-11s-83dg009din-375.html",
+    "lastChecked": "2026-09-19"
+  }
+}

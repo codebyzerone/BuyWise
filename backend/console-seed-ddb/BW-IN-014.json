@@ -1,0 +1,218 @@
+{
+  "M": {
+    "id": {
+      "S": "BW-IN-014"
+    },
+    "brand": {
+      "S": "MSI"
+    },
+    "model": {
+      "S": "Cyborg 15 AI A1VEK-051IN"
+    },
+    "category": {
+      "S": "laptop"
+    },
+    "pricing": {
+      "M": {
+        "currency": {
+          "S": "INR"
+        },
+        "currentPrice": {
+          "N": "111990"
+        },
+        "originalPrice": {
+          "NULL": true
+        },
+        "source": {
+          "S": "Flipkart"
+        },
+        "url": {
+          "S": "https://www.flipkart.com/msi-cyborg-15-ai-intel-core-ultra-5-125h-16-gb-1-tb-ssd-windows-11-home-nvidia-geforce-rtx-4050-a1vek-051in-gaming-laptop/p/itmbfa35c5be1a7b"
+        },
+        "checkedAt": {
+          "S": "2026-09-19"
+        }
+      }
+    },
+    "offers": {
+      "NULL": true
+    },
+    "cpu": {
+      "M": {
+        "brand": {
+          "S": "Intel"
+        },
+        "model": {
+          "S": "Intel Core Ultra 5 125H"
+        },
+        "generation": {
+          "NULL": true
+        },
+        "cores": {
+          "NULL": true
+        },
+        "threads": {
+          "NULL": true
+        },
+        "baseClockGHz": {
+          "NULL": true
+        },
+        "boostClockGHz": {
+          "NULL": true
+        }
+      }
+    },
+    "gpu": {
+      "M": {
+        "model": {
+          "S": "RTX 4050"
+        },
+        "tier": {
+          "S": "mid-range"
+        },
+        "vramGb": {
+          "N": "6"
+        },
+        "tgpW": {
+          "NULL": true
+        }
+      }
+    },
+    "ram": {
+      "M": {
+        "capacityGb": {
+          "N": "16"
+        },
+        "type": {
+          "NULL": true
+        },
+        "speedMHz": {
+          "NULL": true
+        },
+        "slots": {
+          "NULL": true
+        },
+        "upgradeable": {
+          "NULL": true
+        },
+        "maximumSupportedGb": {
+          "NULL": true
+        }
+      }
+    },
+    "storage": {
+      "M": {
+        "capacityGb": {
+          "N": "1024"
+        },
+        "type": {
+          "S": "SSD"
+        },
+        "slots": {
+          "NULL": true
+        },
+        "upgradeable": {
+          "NULL": true
+        }
+      }
+    },
+    "display": {
+      "M": {
+        "sizeInches": {
+          "NULL": true
+        },
+        "resolution": {
+          "NULL": true
+        },
+        "panel": {
+          "NULL": true
+        },
+        "refreshRateHz": {
+          "NULL": true
+        },
+        "brightnessNits": {
+          "NULL": true
+        },
+        "colorGamut": {
+          "NULL": true
+        },
+        "tier": {
+          "NULL": true
+        }
+      }
+    },
+    "battery": {
+      "M": {
+        "capacityWh": {
+          "NULL": true
+        }
+      }
+    },
+    "physical": {
+      "M": {
+        "weightKg": {
+          "NULL": true
+        },
+        "thicknessMm": {
+          "NULL": true
+        }
+      }
+    },
+    "connectivity": {
+      "M": {
+        "wifi": {
+          "NULL": true
+        },
+        "bluetooth": {
+          "NULL": true
+        }
+      }
+    },
+    "ports": {
+      "NULL": true
+    },
+    "os": {
+      "S": "windows"
+    },
+    "webcam": {
+      "M": {
+        "resolution": {
+          "NULL": true
+        }
+      }
+    },
+    "keyboard": {
+      "M": {
+        "backlit": {
+          "NULL": true
+        },
+        "numpad": {
+          "NULL": true
+        }
+      }
+    },
+    "upgradeability": {
+      "M": {
+        "ram": {
+          "NULL": true
+        },
+        "storage": {
+          "NULL": true
+        }
+      }
+    },
+    "source": {
+      "M": {
+        "retailer": {
+          "S": "Flipkart"
+        },
+        "productUrl": {
+          "S": "https://www.flipkart.com/msi-cyborg-15-ai-intel-core-ultra-5-125h-16-gb-1-tb-ssd-windows-11-home-nvidia-geforce-rtx-4050-a1vek-051in-gaming-laptop/p/itmbfa35c5be1a7b"
+        },
+        "lastChecked": {
+          "S": "2026-09-19"
+        }
+      }
+    }
+  }
+}

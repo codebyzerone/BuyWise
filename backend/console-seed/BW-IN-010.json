@@ -1,0 +1,82 @@
+{
+  "id": "BW-IN-010",
+  "brand": "Apple",
+  "model": "MacBook Air 13-inch M2 (16GB/256GB) MC7W4HN/A",
+  "category": "laptop",
+  "pricing": {
+    "currency": "INR",
+    "currentPrice": 85900,
+    "originalPrice": null,
+    "source": "Flipkart",
+    "url": "https://www.flipkart.com/apple-macbook-air-m2-13-6-inch-liquid-retina-display-m2-16gb-memory-256gb-ssd-midnight/p/itmc0eeae19d09f1",
+    "checkedAt": "2026-09-19"
+  },
+  "offers": [],
+  "cpu": {
+    "brand": "Apple",
+    "model": "Apple M2",
+    "generation": null,
+    "cores": null,
+    "threads": null,
+    "baseClockGHz": null,
+    "boostClockGHz": null
+  },
+  "gpu": {
+    "model": null,
+    "tier": null,
+    "vramGb": null,
+    "tgpW": null
+  },
+  "ram": {
+    "capacityGb": 16,
+    "type": null,
+    "speedMHz": null,
+    "slots": null,
+    "upgradeable": null,
+    "maximumSupportedGb": null
+  },
+  "storage": {
+    "capacityGb": 256,
+    "type": "SSD",
+    "slots": null,
+    "upgradeable": null
+  },
+  "display": {
+    "sizeInches": null,
+    "resolution": null,
+    "panel": null,
+    "refreshRateHz": null,
+    "brightnessNits": null,
+    "colorGamut": null,
+    "tier": null
+  },
+  "battery": {
+    "capacityWh": null
+  },
+  "physical": {
+    "weightKg": null,
+    "thicknessMm": null
+  },
+  "connectivity": {
+    "wifi": null,
+    "bluetooth": null
+  },
+  "ports": [],
+  "os": "macos",
+  "webcam": {
+    "resolution": null
+  },
+  "keyboard": {
+    "backlit": null,
+    "numpad": null
+  },
+  "upgradeability": {
+    "ram": null,
+    "storage": null
+  },
+  "source": {
+    "retailer": "Flipkart",
+    "productUrl": "https://www.flipkart.com/apple-macbook-air-m2-13-6-inch-liquid-retina-display-m2-16gb-memory-256gb-ssd-midnight/p/itmc0eeae19d09f1",
+    "lastChecked": "2026-09-19"
+  }
+}

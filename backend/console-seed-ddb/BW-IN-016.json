@@ -1,0 +1,218 @@
+{
+  "M": {
+    "id": {
+      "S": "BW-IN-016"
+    },
+    "brand": {
+      "S": "Lenovo"
+    },
+    "model": {
+      "S": "LOQ 15IRX9"
+    },
+    "category": {
+      "S": "laptop"
+    },
+    "pricing": {
+      "M": {
+        "currency": {
+          "S": "INR"
+        },
+        "currentPrice": {
+          "N": "123000"
+        },
+        "originalPrice": {
+          "NULL": true
+        },
+        "source": {
+          "S": "Flipkart"
+        },
+        "url": {
+          "NULL": true
+        },
+        "checkedAt": {
+          "S": "2026-09-19"
+        }
+      }
+    },
+    "offers": {
+      "NULL": true
+    },
+    "cpu": {
+      "M": {
+        "brand": {
+          "S": "Intel"
+        },
+        "model": {
+          "S": "Intel Core i5-12450HX"
+        },
+        "generation": {
+          "NULL": true
+        },
+        "cores": {
+          "NULL": true
+        },
+        "threads": {
+          "NULL": true
+        },
+        "baseClockGHz": {
+          "NULL": true
+        },
+        "boostClockGHz": {
+          "NULL": true
+        }
+      }
+    },
+    "gpu": {
+      "M": {
+        "model": {
+          "S": "RTX 4060"
+        },
+        "tier": {
+          "S": "mid-range"
+        },
+        "vramGb": {
+          "N": "8"
+        },
+        "tgpW": {
+          "NULL": true
+        }
+      }
+    },
+    "ram": {
+      "M": {
+        "capacityGb": {
+          "N": "16"
+        },
+        "type": {
+          "NULL": true
+        },
+        "speedMHz": {
+          "NULL": true
+        },
+        "slots": {
+          "NULL": true
+        },
+        "upgradeable": {
+          "NULL": true
+        },
+        "maximumSupportedGb": {
+          "NULL": true
+        }
+      }
+    },
+    "storage": {
+      "M": {
+        "capacityGb": {
+          "N": "512"
+        },
+        "type": {
+          "S": "SSD"
+        },
+        "slots": {
+          "NULL": true
+        },
+        "upgradeable": {
+          "NULL": true
+        }
+      }
+    },
+    "display": {
+      "M": {
+        "sizeInches": {
+          "NULL": true
+        },
+        "resolution": {
+          "NULL": true
+        },
+        "panel": {
+          "NULL": true
+        },
+        "refreshRateHz": {
+          "N": "144"
+        },
+        "brightnessNits": {
+          "NULL": true
+        },
+        "colorGamut": {
+          "NULL": true
+        },
+        "tier": {
+          "NULL": true
+        }
+      }
+    },
+    "battery": {
+      "M": {
+        "capacityWh": {
+          "NULL": true
+        }
+      }
+    },
+    "physical": {
+      "M": {
+        "weightKg": {
+          "NULL": true
+        },
+        "thicknessMm": {
+          "NULL": true
+        }
+      }
+    },
+    "connectivity": {
+      "M": {
+        "wifi": {
+          "NULL": true
+        },
+        "bluetooth": {
+          "NULL": true
+        }
+      }
+    },
+    "ports": {
+      "NULL": true
+    },
+    "os": {
+      "S": "windows"
+    },
+    "webcam": {
+      "M": {
+        "resolution": {
+          "NULL": true
+        }
+      }
+    },
+    "keyboard": {
+      "M": {
+        "backlit": {
+          "NULL": true
+        },
+        "numpad": {
+          "NULL": true
+        }
+      }
+    },
+    "upgradeability": {
+      "M": {
+        "ram": {
+          "NULL": true
+        },
+        "storage": {
+          "NULL": true
+        }
+      }
+    },
+    "source": {
+      "M": {
+        "retailer": {
+          "S": "Flipkart"
+        },
+        "productUrl": {
+          "NULL": true
+        },
+        "lastChecked": {
+          "S": "2026-09-19"
+        }
+      }
+    }
+  }
+}

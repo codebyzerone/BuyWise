@@ -1,0 +1,82 @@
+{
+  "id": "BW-IN-004",
+  "brand": "MSI",
+  "model": "Thin 15 B13UCX-1657IN",
+  "category": "laptop",
+  "pricing": {
+    "currency": "INR",
+    "currentPrice": 63990,
+    "originalPrice": null,
+    "source": "Flipkart",
+    "url": "https://www.flipkart.com/msi-thin-15-intel-core-i5-13th-gen-13420h-16-gb-1-tb-ssd-windows-11-home-nvidia-geforce-rtx-3050-b13ucx-1657in-gaming-laptop/p/itm5d6d64b3171c0",
+    "checkedAt": "2026-09-19"
+  },
+  "offers": [],
+  "cpu": {
+    "brand": "Intel",
+    "model": "Intel Core i5-13420H",
+    "generation": null,
+    "cores": null,
+    "threads": null,
+    "baseClockGHz": null,
+    "boostClockGHz": null
+  },
+  "gpu": {
+    "model": "RTX 3050",
+    "tier": "entry-level",
+    "vramGb": null,
+    "tgpW": null
+  },
+  "ram": {
+    "capacityGb": 16,
+    "type": "DDR4",
+    "speedMHz": null,
+    "slots": null,
+    "upgradeable": null,
+    "maximumSupportedGb": null
+  },
+  "storage": {
+    "capacityGb": 1024,
+    "type": "SSD",
+    "slots": null,
+    "upgradeable": null
+  },
+  "display": {
+    "sizeInches": 15.6,
+    "resolution": null,
+    "panel": null,
+    "refreshRateHz": 144,
+    "brightnessNits": null,
+    "colorGamut": null,
+    "tier": null
+  },
+  "battery": {
+    "capacityWh": null
+  },
+  "physical": {
+    "weightKg": null,
+    "thicknessMm": null
+  },
+  "connectivity": {
+    "wifi": null,
+    "bluetooth": null
+  },
+  "ports": [],
+  "os": "windows",
+  "webcam": {
+    "resolution": null
+  },
+  "keyboard": {
+    "backlit": null,
+    "numpad": null
+  },
+  "upgradeability": {
+    "ram": null,
+    "storage": null
+  },
+  "source": {
+    "retailer": "Flipkart",
+    "productUrl": "https://www.flipkart.com/msi-thin-15-intel-core-i5-13th-gen-13420h-16-gb-1-tb-ssd-windows-11-home-nvidia-geforce-rtx-3050-b13ucx-1657in-gaming-laptop/p/itm5d6d64b3171c0",
+    "lastChecked": "2026-09-19"
+  }
+}

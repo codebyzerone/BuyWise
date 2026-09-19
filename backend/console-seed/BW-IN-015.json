@@ -1,0 +1,82 @@
+{
+  "id": "BW-IN-015",
+  "brand": "ASUS",
+  "model": "TUF Gaming A15 FA507NVR-LP204WS",
+  "category": "laptop",
+  "pricing": {
+    "currency": "INR",
+    "currentPrice": 119990,
+    "originalPrice": null,
+    "source": "ASUS India Store",
+    "url": "https://in.store.asus.com/gaming-laptop-asus-tuf-gaming-a15-fa507nvr-lp204ws.html",
+    "checkedAt": "2026-09-19"
+  },
+  "offers": [],
+  "cpu": {
+    "brand": "AMD",
+    "model": "AMD Ryzen 7 7435HS",
+    "generation": null,
+    "cores": null,
+    "threads": null,
+    "baseClockGHz": null,
+    "boostClockGHz": null
+  },
+  "gpu": {
+    "model": "RTX 4060",
+    "tier": "mid-range",
+    "vramGb": 8,
+    "tgpW": null
+  },
+  "ram": {
+    "capacityGb": 16,
+    "type": "DDR5",
+    "speedMHz": null,
+    "slots": null,
+    "upgradeable": null,
+    "maximumSupportedGb": null
+  },
+  "storage": {
+    "capacityGb": 1024,
+    "type": "SSD",
+    "slots": null,
+    "upgradeable": null
+  },
+  "display": {
+    "sizeInches": 15.6,
+    "resolution": null,
+    "panel": null,
+    "refreshRateHz": 144,
+    "brightnessNits": null,
+    "colorGamut": null,
+    "tier": null
+  },
+  "battery": {
+    "capacityWh": null
+  },
+  "physical": {
+    "weightKg": null,
+    "thicknessMm": null
+  },
+  "connectivity": {
+    "wifi": null,
+    "bluetooth": null
+  },
+  "ports": [],
+  "os": "windows",
+  "webcam": {
+    "resolution": null
+  },
+  "keyboard": {
+    "backlit": null,
+    "numpad": null
+  },
+  "upgradeability": {
+    "ram": null,
+    "storage": null
+  },
+  "source": {
+    "retailer": "ASUS India Store",
+    "productUrl": "https://in.store.asus.com/gaming-laptop-asus-tuf-gaming-a15-fa507nvr-lp204ws.html",
+    "lastChecked": "2026-09-19"
+  }
+}

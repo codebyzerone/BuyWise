@@ -1,0 +1,218 @@
+{
+  "M": {
+    "id": {
+      "S": "BW-IN-005"
+    },
+    "brand": {
+      "S": "Lenovo"
+    },
+    "model": {
+      "S": "IdeaPad Slim 5 14IRH10 (83HR000WIN)"
+    },
+    "category": {
+      "S": "laptop"
+    },
+    "pricing": {
+      "M": {
+        "currency": {
+          "S": "INR"
+        },
+        "currentPrice": {
+          "N": "73991"
+        },
+        "originalPrice": {
+          "N": "97291"
+        },
+        "source": {
+          "S": "Lenovo India Store"
+        },
+        "url": {
+          "S": "https://store.lenovo.com/in/en/nb-ip-slim-5-14irh10-i5-16g-1t-11s-83hr000win-393.html"
+        },
+        "checkedAt": {
+          "S": "2026-09-19"
+        }
+      }
+    },
+    "offers": {
+      "NULL": true
+    },
+    "cpu": {
+      "M": {
+        "brand": {
+          "S": "Intel"
+        },
+        "model": {
+          "S": "Core i5-13420H"
+        },
+        "generation": {
+          "S": "13th Gen"
+        },
+        "cores": {
+          "NULL": true
+        },
+        "threads": {
+          "NULL": true
+        },
+        "baseClockGHz": {
+          "NULL": true
+        },
+        "boostClockGHz": {
+          "N": "4.6"
+        }
+      }
+    },
+    "gpu": {
+      "M": {
+        "model": {
+          "S": "Intel UHD Graphics (integrated)"
+        },
+        "tier": {
+          "S": "integrated"
+        },
+        "vramGb": {
+          "NULL": true
+        },
+        "tgpW": {
+          "NULL": true
+        }
+      }
+    },
+    "ram": {
+      "M": {
+        "capacityGb": {
+          "N": "16"
+        },
+        "type": {
+          "S": "DDR5"
+        },
+        "speedMHz": {
+          "NULL": true
+        },
+        "slots": {
+          "NULL": true
+        },
+        "upgradeable": {
+          "NULL": true
+        },
+        "maximumSupportedGb": {
+          "NULL": true
+        }
+      }
+    },
+    "storage": {
+      "M": {
+        "capacityGb": {
+          "N": "1024"
+        },
+        "type": {
+          "S": "SSD"
+        },
+        "slots": {
+          "NULL": true
+        },
+        "upgradeable": {
+          "NULL": true
+        }
+      }
+    },
+    "display": {
+      "M": {
+        "sizeInches": {
+          "NULL": true
+        },
+        "resolution": {
+          "S": "1920x1200"
+        },
+        "panel": {
+          "S": "OLED"
+        },
+        "refreshRateHz": {
+          "N": "60"
+        },
+        "brightnessNits": {
+          "NULL": true
+        },
+        "colorGamut": {
+          "NULL": true
+        },
+        "tier": {
+          "S": "oled"
+        }
+      }
+    },
+    "battery": {
+      "M": {
+        "capacityWh": {
+          "N": "60"
+        }
+      }
+    },
+    "physical": {
+      "M": {
+        "weightKg": {
+          "N": "1.49"
+        },
+        "thicknessMm": {
+          "NULL": true
+        }
+      }
+    },
+    "connectivity": {
+      "M": {
+        "wifi": {
+          "NULL": true
+        },
+        "bluetooth": {
+          "NULL": true
+        }
+      }
+    },
+    "ports": {
+      "NULL": true
+    },
+    "os": {
+      "S": "windows"
+    },
+    "webcam": {
+      "M": {
+        "resolution": {
+          "S": "1080p"
+        }
+      }
+    },
+    "keyboard": {
+      "M": {
+        "backlit": {
+          "BOOL": true
+        },
+        "numpad": {
+          "NULL": true
+        }
+      }
+    },
+    "upgradeability": {
+      "M": {
+        "ram": {
+          "NULL": true
+        },
+        "storage": {
+          "NULL": true
+        }
+      }
+    },
+    "source": {
+      "M": {
+        "retailer": {
+          "S": "Lenovo India Store"
+        },
+        "productUrl": {
+          "S": "https://store.lenovo.com/in/en/nb-ip-slim-5-14irh10-i5-16g-1t-11s-83hr000win-393.html"
+        },
+        "lastChecked": {
+          "S": "2026-09-19"
+        }
+      }
+    }
+  }
+}

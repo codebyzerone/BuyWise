@@ -2,8 +2,10 @@
  * Smoke-tests a deployed (or local) BuyWise POST /recommend endpoint.
  *
  * Usage:
- *   node scripts/smoke-test.mjs [endpoint]
+ *   node scripts/smoke.mjs [endpoint]
  * Default endpoint: http://localhost:5000/recommend
+ * The endpoint may be the API base URL (https://<id>.execute-api.<region>.
+ * amazonaws.com) or the full path; /recommend is appended when missing.
  *
  * Covers the Phase B verification matrix:
  *   1. valid recommendation      -> 200, success true, count > 0
@@ -15,8 +17,18 @@
 
 import process from 'node:process'
 
-const endpoint =
-  process.argv[2] ?? 'http://localhost:5000/recommend'
+/** Base URL or full path -> normalized full POST /recommend endpoint. */
+function normalizeEndpoint(url) {
+  const trimmed = String(url ?? '').trim()
+  if (trimmed === '') return 'http://localhost:5000/recommend'
+  const withoutTrailingSlashes = trimmed.replace(/\/+$/, '')
+  if (withoutTrailingSlashes.toLowerCase().endsWith('/recommend')) {
+    return withoutTrailingSlashes
+  }
+  return `${withoutTrailingSlashes}/recommend`
+}
+
+const endpoint = normalizeEndpoint(process.argv[2])
 
 const CASES = [
   {

@@ -1,0 +1,82 @@
+{
+  "id": "BW-IN-017",
+  "brand": "Dell",
+  "model": "G15 5530 Gaming Laptop",
+  "category": "laptop",
+  "pricing": {
+    "currency": "INR",
+    "currentPrice": 121990,
+    "originalPrice": null,
+    "source": "Amazon.in",
+    "url": "https://www.amazon.in/dp/B0C4ZWZJ9S",
+    "checkedAt": "2026-09-19"
+  },
+  "offers": [],
+  "cpu": {
+    "brand": "Intel",
+    "model": "Core i7-13650HX",
+    "generation": "13th Gen",
+    "cores": null,
+    "threads": null,
+    "baseClockGHz": null,
+    "boostClockGHz": 4.9
+  },
+  "gpu": {
+    "model": "RTX 4060",
+    "tier": "mid-range",
+    "vramGb": 8,
+    "tgpW": null
+  },
+  "ram": {
+    "capacityGb": 16,
+    "type": "DDR5",
+    "speedMHz": 4800,
+    "slots": null,
+    "upgradeable": null,
+    "maximumSupportedGb": null
+  },
+  "storage": {
+    "capacityGb": 1024,
+    "type": "SSD",
+    "slots": null,
+    "upgradeable": null
+  },
+  "display": {
+    "sizeInches": 15.6,
+    "resolution": "1920x1080",
+    "panel": null,
+    "refreshRateHz": null,
+    "brightnessNits": null,
+    "colorGamut": null,
+    "tier": "good"
+  },
+  "battery": {
+    "capacityWh": null
+  },
+  "physical": {
+    "weightKg": 2.65,
+    "thicknessMm": null
+  },
+  "connectivity": {
+    "wifi": null,
+    "bluetooth": null
+  },
+  "ports": [],
+  "os": "windows",
+  "webcam": {
+    "resolution": "720p"
+  },
+  "keyboard": {
+    "backlit": true,
+    "numpad": true
+  },
+  "upgradeability": {
+    "ram": null,
+    "storage": null
+  },
+  "source": {
+    "retailer": "Amazon.in",
+    "productUrl": "https://www.amazon.in/dp/B0C4ZWZJ9S",
+    "lastChecked": "2026-09-19"
+  }
+}

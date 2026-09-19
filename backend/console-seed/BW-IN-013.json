@@ -1,0 +1,82 @@
+{
+  "id": "BW-IN-013",
+  "brand": "Acer",
+  "model": "Nitro V ANV15-51",
+  "category": "laptop",
+  "pricing": {
+    "currency": "INR",
+    "currentPrice": 106990,
+    "originalPrice": null,
+    "source": "Acer India Store",
+    "url": "https://store.acer.com/en-in/acer-nitro-v-intel-core-i5-13420h-processor-laptop-windows-11-home-1-16-gb-ram-1-tb-ssd-nvidia-geforce-rtxtm-4050-with-6-gb-of-dedicated-gddr6-vram-anv15-51-with-39-6-cm-15-6-ips-full-hd-display-keyboard-obsidian-black-2-113-kg",
+    "checkedAt": "2026-09-19"
+  },
+  "offers": [],
+  "cpu": {
+    "brand": "Intel",
+    "model": "Intel Core i5-13420H",
+    "generation": null,
+    "cores": null,
+    "threads": null,
+    "baseClockGHz": null,
+    "boostClockGHz": null
+  },
+  "gpu": {
+    "model": "RTX 4050",
+    "tier": "mid-range",
+    "vramGb": 6,
+    "tgpW": null
+  },
+  "ram": {
+    "capacityGb": 16,
+    "type": null,
+    "speedMHz": null,
+    "slots": null,
+    "upgradeable": null,
+    "maximumSupportedGb": null
+  },
+  "storage": {
+    "capacityGb": 1024,
+    "type": "SSD",
+    "slots": null,
+    "upgradeable": null
+  },
+  "display": {
+    "sizeInches": 15.6,
+    "resolution": null,
+    "panel": "IPS",
+    "refreshRateHz": null,
+    "brightnessNits": null,
+    "colorGamut": null,
+    "tier": null
+  },
+  "battery": {
+    "capacityWh": null
+  },
+  "physical": {
+    "weightKg": 2.113,
+    "thicknessMm": null
+  },
+  "connectivity": {
+    "wifi": null,
+    "bluetooth": null
+  },
+  "ports": [],
+  "os": "windows",
+  "webcam": {
+    "resolution": null
+  },
+  "keyboard": {
+    "backlit": null,
+    "numpad": null
+  },
+  "upgradeability": {
+    "ram": null,
+    "storage": null
+  },
+  "source": {
+    "retailer": "Acer India Store",
+    "productUrl": "https://store.acer.com/en-in/acer-nitro-v-intel-core-i5-13420h-processor-laptop-windows-11-home-1-16-gb-ram-1-tb-ssd-nvidia-geforce-rtxtm-4050-with-6-gb-of-dedicated-gddr6-vram-anv15-51-with-39-6-cm-15-6-ips-full-hd-display-keyboard-obsidian-black-2-113-kg",
+    "lastChecked": "2026-09-19"
+  }
+}
