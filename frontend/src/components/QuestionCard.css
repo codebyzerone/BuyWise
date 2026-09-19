@@ -1,0 +1,108 @@
+.question-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px;
+  margin: 0;
+  background: var(--bg);
+  box-shadow: var(--shadow);
+  text-align: left;
+}
+
+.question-card__prompt {
+  font-family: var(--heading);
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 130%;
+  color: var(--text-h);
+  padding: 0;
+  margin: 0 0 18px;
+}
+
+.question-card__options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.question-card__option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
+}
+
+.question-card__option:hover {
+  border-color: var(--accent-border);
+}
+
+.question-card__option--selected {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+}
+
+.question-card__option:has(.question-card__option-input:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.question-card__option-input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  flex-shrink: 0;
+  accent-color: var(--accent);
+}
+
+.question-card__option-label {
+  font-size: 16px;
+  color: var(--text);
+}
+
+.question-card__option--selected .question-card__option-label {
+  color: var(--text-h);
+}
+
+.question-card__text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 18px;
+}
+
+.question-card__text-label {
+  font-size: 14px;
+  color: var(--text);
+}
+
+.question-card__text-input {
+  font: inherit;
+  color: var(--text-h);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.question-card__text-input:focus-visible {
+  border-color: var(--accent);
+}
+
+.question-card__text-input--multiline {
+  resize: vertical;
+  min-height: 96px;
+  line-height: 145%;
+}
+
+.question-card__hint {
+  margin: -12px 0 14px;
+  font-size: 14px;
+  color: var(--text);
+}
