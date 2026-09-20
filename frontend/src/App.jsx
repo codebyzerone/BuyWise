@@ -1,6 +1,7 @@
 import { Component, useState } from 'react'
 import QuestionFlow from './components/QuestionFlow.jsx'
 import ResultsView from './components/ResultsView.jsx'
+import LandingPage from './components/LandingPage.jsx'
 import { laptopInterviewQuestions } from './data/laptopInterview.js'
 import { buildRequirements } from './data/buildRequirements.js'
 import { summarizeRequirements } from './data/summarizeRequirements.js'
@@ -59,10 +60,12 @@ class FlowErrorBoundary extends Component {
  * App shell: interview -> requirements -> recommendations -> results.
  *
  * Flow (no page reload, pure React state):
- *   QuestionFlow finishes -> onComplete(profile) -> recommendations
- *   -> stored in state -> <ResultsView/>.
+ *   Landing page -> CTA -> QuestionFlow finishes -> onComplete(profile)
+ *   -> recommendations -> stored in state -> <ResultsView/>.
  * "Start over" / "Change your requirements" clears every piece of state and
- * remounts QuestionFlow (key={runId}), fully resetting answers and position.
+ * remounts QuestionFlow (key={runId}), fully resetting answers and position
+ * (within the interview, exactly as before - it does NOT return to the
+ * landing page).
  *
  * PHASE C - recommendation source:
  *   - VITE_BUYWISE_API_URL set  -> the deployed backend (API Gateway ->
@@ -78,6 +81,10 @@ function App() {
   const [hasError, setHasError] = useState(false)
   const [runId, setRunId] = useState(0)
   const [isRecommending, setIsRecommending] = useState(false)
+  const [showLanding, setShowLanding] = useState(true)
+
+  /** Landing CTA -> hand over to the EXISTING interview flow. */
+  const startInterview = () => setShowLanding(false)
 
   /** The original synchronous local pipeline - unchanged behavior. */
   const applyLocalRecommendations = (profile) => {
@@ -140,7 +147,9 @@ function App() {
 
   const showResults = recommendation !== null || hasError
 
-  return (
+  return showLanding ? (
+    <LandingPage onStart={startInterview} />
+  ) : (
     <main className="quiz-page">
       <header className="quiz-header">
         <span className="quiz-header__brand">BuyWise</span>

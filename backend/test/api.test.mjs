@@ -243,16 +243,25 @@ test('rejects a non-object requirements envelope with 400', async () => {
  * Zero-result and error handling
  * ------------------------------------------------------------------------ */
 
-test('a request no product can satisfy succeeds with zero recommendations', async () => {
+test('a request no product can satisfy returns closest matches + conflicts', async () => {
   const response = await handler(v2Event({ budget: 15000, gpu: 'mid-range' }))
   assert.equal(response.statusCode, 200)
   const payload = JSON.parse(response.body)
+  // Zero exact matches is still a success - but no longer an empty list:
+  // the engine's closest-match fallback returns up to 3 real alternatives.
   assert.equal(payload.success, true)
-  assert.equal(payload.count, 0)
-  assert.deepEqual(payload.recommendations, [])
   assert.equal(payload.feasible, false)
+  assert.equal(payload.closestMatches, true)
+  assert.ok(payload.count >= 1 && payload.count <= 3)
+  assert.equal(payload.count, payload.recommendations.length)
+  for (const rec of payload.recommendations) {
+    assert.equal(rec.matchLabel, 'closest match')
+    assert.ok(rec.product.id)
+    // Every alternative states why it differs (compromise notes).
+    assert.ok(rec.compromises.length > 0)
+  }
+  // The conflict diagnosis is preserved.
   assert.ok(payload.conflicts.length > 0)
-  // The engine names the unsatisfiable hard requirement.
   assert.ok(
     payload.conflicts.some((conflict) => conflict.field.includes('budget')),
   )

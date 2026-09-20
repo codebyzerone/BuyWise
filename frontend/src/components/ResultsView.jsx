@@ -7,9 +7,12 @@
  *
  * Renders EXACTLY what the recommendation engine returns - factual reasons,
  * compromises and conflicts only. It never claims "best laptop", "perfect
- * laptop" or "guaranteed performance", and never relaxes hard requirements:
- * when feasibility finds no match, the conflicts are shown together with a
- * restart ("Change your requirements") instead.
+ * laptop" or "guaranteed performance". Exact matches render as before; when
+ * feasibility finds no exact match, the engine's closest-match fallback is
+ * rendered instead ("Closest matches" + the ACTUAL conflict diagnosis +
+ * per-card compromise notes) - every alternative still states why it
+ * differs. When nothing at all can be suggested, the conflicts are shown
+ * together with a restart ("Change your requirements").
  */
 
 import './ResultsView.css'
@@ -196,6 +199,8 @@ function LaptopCard({ recommendation }) {
 /**
  * Results screen. Pure presentation over the recommendation-engine output:
  * - feasible:  summary chips + one minimal card per recommendation
+ * - closest:   "Closest matches" + the ACTUAL feasibility conflicts +
+ *              per-card compromise notes (engine closest-match fallback)
  * - zero:      "No exact match found" + the ACTUAL feasibility conflicts
  *              + "Change your requirements" (restart - never auto-relaxing)
  * - error:     graceful fallback for invalid results / runtime failures
@@ -207,6 +212,22 @@ function LaptopCard({ recommendation }) {
  */
 export default function ResultsView({ result, requirements, hasError, onRestart }) {
   const chips = requirementChips(requirements)
+  const recommendations =
+    result != null && Array.isArray(result.recommendations)
+      ? result.recommendations
+      : []
+  const conflicts =
+    result != null && Array.isArray(result.conflicts) ? result.conflicts : []
+
+  /* Engine closest-match fallback: feasibility found NO exact match, but
+     real alternatives exist (labelled 'closest match'). They render in the
+     normal results layout, headed "Closest matches", with the conflict
+     diagnosis kept visible. */
+  const closestMatches =
+    result != null &&
+    result.feasible === false &&
+    result.closestMatches === true &&
+    recommendations.length > 0
 
   if (hasError || result == null || typeof result !== 'object') {
     return (
@@ -229,8 +250,7 @@ export default function ResultsView({ result, requirements, hasError, onRestart 
     )
   }
 
-  if (!result.feasible) {
-    const conflicts = Array.isArray(result.conflicts) ? result.conflicts : []
+  if (!result.feasible && !closestMatches) {
     return (
       <section className="results">
         <div className="results__empty">
@@ -273,9 +293,6 @@ export default function ResultsView({ result, requirements, hasError, onRestart 
     )
   }
 
-  const recommendations = Array.isArray(result.recommendations)
-    ? result.recommendations
-    : []
   const unmetPreferences = Array.isArray(result.unmetPreferences)
     ? result.unmetPreferences
     : []
@@ -301,7 +318,7 @@ export default function ResultsView({ result, requirements, hasError, onRestart 
   return (
     <section className="results">
       <header className="results__header">
-        <h1>Your laptop matches</h1>
+        <h1>{closestMatches ? 'Closest matches' : 'Your laptop matches'}</h1>
         {chips.length > 0 && (
           <ul className="results__chips" aria-label="Your requirements">
             {chips.map((chip) => (
@@ -312,10 +329,28 @@ export default function ResultsView({ result, requirements, hasError, onRestart 
           </ul>
         )}
         <p className="results__count">
-          {recommendations.length}{' '}
-          {recommendations.length === 1 ? 'laptop' : 'laptops'} match your
-          requirements, ordered by match quality.
+          {closestMatches
+            ? `No laptop meets every requirement. These ${
+                recommendations.length === 1 ? 'is' : 'are'
+              } the ${recommendations.length} closest ${
+                recommendations.length === 1 ? 'laptop' : 'laptops'
+              } in the catalog, ranked by how many of your requirements they satisfy.`
+            : `${recommendations.length} ${
+                recommendations.length === 1 ? 'laptop' : 'laptops'
+              } match your requirements, ordered by match quality.`}
         </p>
+        {closestMatches && conflicts.length > 0 && (
+          <div className="results__conflicts">
+            <p className="results__conflicts-title">What conflicted:</p>
+            <ul className="results__conflicts-list">
+              {conflicts.map((conflict) => (
+                <li key={`${conflict.field}-${conflict.reason}`}>
+                  {conflict.reason}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
         {unmetPreferences.length > 0 && (
           <p className="results__unmet">
             Note:{' '}

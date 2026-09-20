@@ -55,9 +55,12 @@ const CASES = [
     expect: (status, payload) =>
       status === 200 &&
       payload.success === true &&
-      payload.count === 0 &&
       payload.feasible === false &&
-      payload.conflicts.length > 0,
+      payload.closestMatches === true &&
+      payload.count >= 1 &&
+      payload.count <= 3 &&
+      payload.conflicts.length > 0 &&
+      payload.recommendations.every((rec) => rec.matchLabel === 'closest match'),
   },
   {
     name: 'invalid request',

@@ -87,7 +87,7 @@ test('valid profile: frontend module receives usable backend recommendations', a
   assert.ok(Array.isArray(payload.unmetPreferences))
 })
 
-test('impossible profile: zero recommendations with conflict diagnosis', async () => {
+test('impossible profile: closest matches with conflict diagnosis', async () => {
   await waitForServer()
   const payload = await fetchRecommendations(
     { ...PROFILE, budget: { max: 15000, strict: true } },
@@ -96,8 +96,11 @@ test('impossible profile: zero recommendations with conflict diagnosis', async (
   assert.notEqual(payload, null)
   assert.equal(payload.success, true)
   assert.equal(payload.feasible, false)
-  assert.equal(payload.count, 0)
+  // No longer an empty list: the engine returns up to 3 closest matches.
+  assert.equal(payload.closestMatches, true)
+  assert.ok(payload.count >= 1 && payload.count <= 3)
   assert.ok(payload.conflicts.length > 0)
+  assert.ok(payload.recommendations.every((rec) => rec.matchLabel === 'closest match'))
 })
 
 test('unreachable API resolves to null so the local engine can take over', async () => {

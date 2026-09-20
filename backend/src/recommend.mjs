@@ -42,8 +42,10 @@ export async function handleRecommendRequest(body) {
       recommendations: result.recommendations,
       count: result.recommendations.length,
       feasible: result.feasible,
-      // Zero-result requests stay a success: the engine's conflict diagnosis
-      // explains which hard requirements no available product can satisfy.
+      closestMatches: result.closestMatches,
+      // Zero exact matches stay a success: the closest-match fallback
+      // returns real alternatives and the conflict diagnosis explains
+      // which hard requirements no available product can satisfy.
       conflicts: result.conflicts,
       unmetPreferences: result.unmetPreferences,
       meta: {

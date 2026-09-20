@@ -59,6 +59,27 @@
  *
  * Not yet scored (future work, deliberately out of scope): performance
  * priority, use cases, local AI, software list, additional requirements.
+ *
+ * CLOSEST-MATCH FALLBACK (no-exact-match UX):
+ * When checkFeasibility() finds no product satisfying every hard
+ * requirement, getRecommendations() no longer returns an empty list. It
+ * returns the top CLOSEST_MATCH_LIMIT (3) real products, ranked by how many
+ * requirement groups they satisfy, allowing ONLY these controlled
+ * deviations (never inventing products or data):
+ *   budget  - up to ~15% over the stated maximum
+ *   gpu     - one GPU tier below the requested minimum (a requested
+ *             dedicated GPU is still never replaced by integrated graphics)
+ *   storage - one step down the standard capacity ladder (256/512/1024/2048)
+ *   display - one quality step below the requested tier
+ * RAM and OS are never relaxed. Each result is labelled 'closest match'
+ * (never presented as an exact match) and carries a structured
+ * `deviations` list plus factual gap notes folded into `compromises`, so
+ * the UI can show exactly why each alternative differs. The original
+ * conflict diagnosis is preserved unchanged. Fallback ranking:
+ *   satisfied requirement groups desc -> score desc -> cheaper ->
+ *   stronger GPU -> more RAM -> id asc.
+ * The feasible path (result.feasible === true) is completely unchanged;
+ * the result additionally carries closestMatches: true/false in both.
  */
 
 import { DISPLAY_TIERS } from '../data/productSchema.js'
@@ -393,6 +414,267 @@ function compareRecommendations(a, b) {
   return String(a.product.id).localeCompare(String(b.product.id))
 }
 
+/* ==========================================================================
+ * CLOSEST-MATCH FALLBACK
+ * Used ONLY when feasibility found zero products (see the header). Purely
+ * factual: counts how many requirement groups each REAL product satisfies,
+ * with the documented controlled deviations. Never invents data.
+ * ========================================================================== */
+
+/** Max relative overage allowed on a stated maximum budget (15%). */
+const BUDGET_OVERAGE_ALLOWANCE = 0.15
+
+/** At most this many closest matches are returned. */
+const CLOSEST_MATCH_LIMIT = 3
+
+/** Standard storage capacities (GB, ascending) for one-step-down deviations. */
+const STORAGE_LADDER = [256, 512, 1024, 2048]
+
+/** Largest standard storage step strictly below gb (null when none). */
+function oneStorageStepDown(gb) {
+  const steps = STORAGE_LADDER.filter((step) => step < gb)
+  return steps.length > 0 ? steps[steps.length - 1] : null
+}
+
+/**
+ * One requirement group of the fallback. All notes are factual strings
+ * rendered from actual product data.
+ * - exact: satisfies the requirement exactly as stated.
+ * - withinDeviation: satisfies it within the allowed controlled deviation.
+ * - deviation: factual difference when the deviation is taken (null when
+ *   the product actually exceeds the requirement - nothing to apologize for).
+ * - gap: factual difference when neither exact nor deviation holds.
+ * Unknown product data is never treated as satisfied.
+ */
+const FIT_GROUPS = [
+  {
+    field: 'budget',
+    applicable: (req) => req.budget != null && Number.isFinite(req.budget.max),
+    exact: (req, product) =>
+      typeof product.pricing.currentPrice === 'number' &&
+      product.pricing.currentPrice <= req.budget.max,
+    withinDeviation: (req, product) =>
+      typeof product.pricing.currentPrice === 'number' &&
+      product.pricing.currentPrice <=
+        req.budget.max * (1 + BUDGET_OVERAGE_ALLOWANCE),
+    deviation: (req, product) => {
+      const price = product.pricing.currentPrice
+      const overPercent = Math.round((price / req.budget.max - 1) * 100)
+      return `${formatInr(price)} is about ${overPercent}% over your ${formatInr(req.budget.max)} budget`
+    },
+    gap: (req, product) =>
+      typeof product.pricing.currentPrice === 'number'
+        ? `${formatInr(product.pricing.currentPrice)} — more than ${Math.round(BUDGET_OVERAGE_ALLOWANCE * 100)}% over your ${formatInr(req.budget.max)} budget`
+        : 'Price not stated',
+  },
+  {
+    field: 'ram',
+    applicable: (req) => req.ram != null && Number.isFinite(req.ram.minimumGb),
+    exact: (req, product) =>
+      typeof product.ram.capacityGb === 'number' &&
+      product.ram.capacityGb >= (req.ram.preferredGb ?? req.ram.minimumGb),
+    withinDeviation: (req, product) =>
+      typeof product.ram.capacityGb === 'number' &&
+      product.ram.capacityGb >= req.ram.minimumGb,
+    deviation: (req, product) =>
+      `Has ${formatGb(product.ram.capacityGb)} RAM — meets your ${formatGb(req.ram.minimumGb)} minimum but not your ${formatGb(req.ram.preferredGb ?? req.ram.minimumGb)} preference`,
+    gap: (req, product) =>
+      typeof product.ram.capacityGb === 'number'
+        ? `Has ${formatGb(product.ram.capacityGb)} RAM — below your ${formatGb(req.ram.minimumGb)} minimum`
+        : 'RAM capacity not stated',
+  },
+  {
+    field: 'storage',
+    applicable: (req) =>
+      req.storage != null && Number.isFinite(req.storage.minimumGb),
+    exact: (req, product) =>
+      typeof product.storage.capacityGb === 'number' &&
+      product.storage.capacityGb >=
+        (req.storage.preferredGb ?? req.storage.minimumGb),
+    withinDeviation: (req, product) => {
+      if (typeof product.storage.capacityGb !== 'number') return false
+      if (product.storage.capacityGb >= req.storage.minimumGb) return true
+      const stepDown = oneStorageStepDown(req.storage.minimumGb)
+      return stepDown != null && product.storage.capacityGb >= stepDown
+    },
+    deviation: (req, product) => {
+      if (product.storage.capacityGb >= req.storage.minimumGb) {
+        return `Has ${formatGb(product.storage.capacityGb)} storage — meets your ${formatGb(req.storage.minimumGb)} minimum but not your ${formatGb(req.storage.preferredGb ?? req.storage.minimumGb)} preference`
+      }
+      return `Has ${formatGb(product.storage.capacityGb)} storage — one step below your ${formatGb(req.storage.minimumGb)} minimum`
+    },
+    gap: (req, product) =>
+      typeof product.storage.capacityGb === 'number'
+        ? `Has ${formatGb(product.storage.capacityGb)} storage — well below your ${formatGb(req.storage.minimumGb)} minimum`
+        : 'Storage capacity not stated',
+  },
+  {
+    field: 'gpu',
+    applicable: (req) =>
+      req.gpu != null &&
+      (req.gpu.required === true || req.gpu.minimumTier != null),
+    exact: (req, product) => {
+      const gpu = req.gpu
+      if (
+        gpu.required === true &&
+        gpuTierRank(product.gpu.tier) <= gpuTierRank('integrated')
+      ) {
+        return false
+      }
+      if (gpu.minimumTier != null) {
+        const needed = gpuTierRank(gpu.minimumTier)
+        if (needed < 0 || gpuTierRank(product.gpu.tier) < needed) return false
+      }
+      if (gpu.specificModel != null) {
+        const needed = gpuModelRank(gpu.specificModel)
+        const available = gpuModelRank(product.gpu.model)
+        if (needed >= 0 && (available < 0 || available < needed)) return false
+      }
+      return true
+    },
+    withinDeviation: (req, product) => {
+      const gpu = req.gpu
+      const tier = gpuTierRank(product.gpu.tier)
+      // A requested dedicated GPU is never downgraded to integrated graphics.
+      if (gpu.required === true && tier <= gpuTierRank('integrated')) {
+        return false
+      }
+      const neededTier =
+        gpu.minimumTier != null
+          ? gpuTierRank(gpu.minimumTier)
+          : gpuTierRank('entry-level')
+      if (neededTier < 0) return false
+      return tier >= neededTier - 1
+    },
+    deviation: (req, product) => {
+      const gpu = req.gpu
+      const label = productGpuLabel(product) ?? 'Integrated graphics'
+      const tier = gpuTierRank(product.gpu.tier)
+      if (
+        gpu.minimumTier != null &&
+        tier < gpuTierRank(gpu.minimumTier)
+      ) {
+        return `${label} — one tier below the ${gpu.minimumTier} GPU you asked for`
+      }
+      if (gpu.specificModel != null) {
+        return `${product.gpu.model ?? label} — below the ${gpu.specificModel} you asked for`
+      }
+      return `${label} — below your GPU request`
+    },
+    gap: (req, product) => {
+      const label = productGpuLabel(product)
+      return label != null
+        ? `${label} — below the ${req.gpu.minimumTier ?? 'dedicated'} GPU you asked for`
+        : 'No dedicated GPU — you asked for one'
+    },
+  },
+  {
+    field: 'display',
+    applicable: (req) => req.display != null && req.display.preference != null,
+    exact: (req, product) => product.display.tier === req.display.preference,
+    withinDeviation: (req, product) => {
+      const wanted = displayTierRank(req.display.preference)
+      const actual = displayTierRank(product.display.tier)
+      return wanted >= 0 && actual >= 0 && actual >= wanted - 1
+    },
+    deviation: (req, product) =>
+      displayTierRank(product.display.tier) >
+      displayTierRank(req.display.preference)
+        ? null // better than requested - satisfied, nothing to apologize for
+        : `Has a ${product.display.tier} display — one step below your ${req.display.preference} preference`,
+    gap: (req, product) =>
+      product.display.tier != null
+        ? `Has a ${product.display.tier} display — you preferred ${req.display.preference}`
+        : 'Display quality not stated',
+  },
+  {
+    field: 'os',
+    applicable: (req) => req.os != null && req.os.preferred != null,
+    exact: (req, product) => product.os === req.os.preferred,
+    // Operating system is never relaxed - it either matches or it does not.
+    withinDeviation: () => false,
+    deviation: () => null,
+    gap: (req, product) =>
+      product.os != null
+        ? `Ships with ${product.os} — you preferred ${req.os.preferred}`
+        : 'Operating system not stated',
+  },
+]
+
+
+
+/**
+ * Counts how many requirement groups one product satisfies, collecting the
+ * factual deviation and gap notes.
+ */
+function requirementFit(requirements, product) {
+  let satisfiedCount = 0
+  const deviations = []
+  const gaps = []
+  for (const group of FIT_GROUPS) {
+    if (!group.applicable(requirements)) continue
+    if (group.exact(requirements, product)) {
+      satisfiedCount += 1
+      continue
+    }
+    const note = group.withinDeviation(requirements, product)
+      ? group.deviation(requirements, product)
+      : null
+    if (note !== null) {
+      satisfiedCount += 1
+      if (note !== '') deviations.push(note)
+    } else {
+      gaps.push(group.gap(requirements, product))
+    }
+  }
+  return { satisfiedCount, deviations, gaps }
+}
+
+/**
+ * The top closest real products when no exact match exists (see header).
+ * Ranked by satisfied requirement groups first, then the documented
+ * recommendation ordering. Pure and deterministic.
+ *
+ * @param {object} requirements - normalized Buyer Requirements Profile.
+ * @param {object[]} products - normalized catalog.
+ * @returns {Array<{product: object, score: number, matchLabel: string,
+ *   reasons: string[], compromises: string[], unknowns: string[],
+ *   deviations: string[], satisfiedCount: number}>} at most 3 items.
+ */
+export function findClosestMatches(requirements, products) {
+  return (Array.isArray(products) ? products : [])
+    .map((product) => {
+      const fit = requirementFit(requirements, product)
+      const scored = scoreProduct(requirements, product)
+      const score =
+        scored.applicable === 0
+          ? 0
+          : Math.round((100 * scored.earned) / scored.applicable)
+      return {
+        product,
+        score,
+        // Closest matches are NEVER presented as exact matches.
+        matchLabel: 'closest match',
+        reasons: scored.reasons,
+        // De-duplicated: the engine's own preference compromises plus the
+        // fallback's deviation and gap notes.
+        compromises: [
+          ...new Set([...scored.compromises, ...fit.deviations, ...fit.gaps]),
+        ],
+        unknowns: scored.unknowns,
+        deviations: fit.deviations,
+        satisfiedCount: fit.satisfiedCount,
+      }
+    })
+    .sort((a, b) => {
+      if (b.satisfiedCount !== a.satisfiedCount) {
+        return b.satisfiedCount - a.satisfiedCount
+      }
+      return compareRecommendations(a, b)
+    })
+    .slice(0, CLOSEST_MATCH_LIMIT)
+}
+
 /**
  * Score and order ALREADY-FEASIBLE products. This is the core primitive:
  * it trusts the caller that every product passed checkFeasibility() and
@@ -443,21 +725,28 @@ export function recommendProducts(requirements, feasibleProducts) {
  */
 export function getRecommendations(requirements, products) {
   const feasibilityResult = checkFeasibility(requirements, products)
-  if (!feasibilityResult.feasible) {
+  if (feasibilityResult.feasible) {
     return {
-      feasible: false,
-      recommendations: [],
+      feasible: true,
+      closestMatches: false,
+      recommendations: recommendProducts(
+        requirements,
+        feasibilityResult.matchingProducts,
+      ),
       conflicts: feasibilityResult.conflicts,
-      unmetPreferences: [],
+      unmetPreferences: feasibilityResult.unmetPreferences,
     }
   }
+  // No real product satisfies every hard requirement. Instead of an empty
+  // list, return the top CLOSEST real alternatives (labelled 'closest
+  // match', allowing only the documented controlled deviations) together
+  // with the unchanged conflict diagnosis.
+  const closestMatches = findClosestMatches(requirements, products)
   return {
-    feasible: true,
-    recommendations: recommendProducts(
-      requirements,
-      feasibilityResult.matchingProducts,
-    ),
+    feasible: false,
+    closestMatches: closestMatches.length > 0,
+    recommendations: closestMatches,
     conflicts: feasibilityResult.conflicts,
-    unmetPreferences: feasibilityResult.unmetPreferences,
+    unmetPreferences: [],
   }
 }

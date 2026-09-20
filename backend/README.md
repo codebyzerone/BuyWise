@@ -76,11 +76,22 @@ Success (200):
   ],
   "count": 11,
   "feasible": true,
+  "closestMatches": false,
   "conflicts": [],
   "unmetPreferences": [],
   "meta": { "catalogSource": "bundled-catalog" }
 }
 ```
+
+When NO product satisfies every hard requirement, the response is still
+`success: true` with `feasible: false`, the unchanged conflict diagnosis in
+`conflicts`, and `closestMatches: true` together with up to **3 closest real
+catalog products** (`matchLabel: "closest match"`, plus `deviations` and
+gap notes folded into `compromises`) instead of an empty list. The only
+allowed deviations are documented in the engine
+(`frontend/src/engine/recommendations.js`): ~15% budget overage, one GPU
+tier lower (never integrated graphics for a required dedicated GPU), one
+storage ladder step, one display step; RAM and OS are never relaxed.
 
 Zero matches stays `success: true` with `count: 0`, `feasible: false` and the
 engine's conflict diagnosis in `conflicts`. Invalid/missing input is `400`
