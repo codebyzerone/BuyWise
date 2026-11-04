@@ -22,12 +22,32 @@
 
 import { handleRecommendRequest } from './recommend.mjs'
 
-const CORS_HEADERS = {
-  'Content-Type': 'application/json; charset=utf-8',
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type',
-}
+/** Engine version constant - single source of truth. */
+const ENGINE_VERSION = 'buywise-recommendations/1.0.0 (Node.js 20.x)'
+
+const CORS_HEADERS = (() => {
+  // BUYWISE_ALLOWED_ORIGINS: comma-separated list of allowed origins.
+  // If not set (or empty) in production, cross-origin access is denied
+  // (the '*' is intentionally omitted so the API Gateway / browser blocks it).
+  // Local development retains permissive CORS in server.js (see below).
+  const allowedOrigins = process.env.BUYWISE_ALLOWED_ORIGINS
+  if (allowedOrigins && allowedOrigins.trim() !== '') {
+    const origins = allowedOrigins.split(',').map((o) => o.trim()).filter(Boolean)
+    return {
+      'Content-Type': 'application/json; charset=utf-8',
+      'Access-Control-Allow-Origin': origins,
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    }
+  }
+  // Production default: no wildcard — browser will block cross-origin.
+  return {
+    'Content-Type': 'application/json; charset=utf-8',
+    'Access-Control-Allow-Origin': '', // empty = block CORS
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+  }
+})()
 
 /** True when the event is the requirements object itself (direct invoke). */
 function isDirectInvocation(event) {
@@ -95,12 +115,32 @@ function proxyResponse(statusCode, payload) {
  */
 export async function handler(event) {
   try {
-    if (isDirectInvocation(event)) {
-      const direct = await handleRecommendRequest(event)
-      return direct.payload
+    const path = eventPath(event)
+    const method = eventMethod(event)
+
+    // --- Health check ---
+    if (path === '/health') {
+      const now = new Date().toISOString()
+      const { getProducts } = await import('./products.mjs')
+      const gp = await getProducts()
+      const productCount = Array.isArray(gp.products) ? gp.products.length : 0
+      return proxyResponse(200, {
+        status: 'ok',
+        engine: ENGINE_VERSION,
+        catalogSource: gp.source,
+        productCount,
+        timestamp: now,
+      })
+    }
+      return proxyResponse(200, {
+        status: 'ok',
+        engine: ENGINE_VERSION,
+        catalogSource: source,
+        productCount,
+        timestamp: now,
+      })
     }
 
-    const method = eventMethod(event)
     if (method === 'OPTIONS') {
       // CORS preflight (also answered by API Gateway CORS config).
       return { statusCode: 204, headers: CORS_HEADERS, body: '' }

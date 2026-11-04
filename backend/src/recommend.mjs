@@ -12,6 +12,7 @@
  */
 
 import { getRecommendations } from '../../frontend/src/engine/recommendations.js'
+import { ENGINE_VERSION } from './lambda-handler.mjs'
 import { normalizeRequirements } from './normalizeRequest.mjs'
 import { getProducts } from './products.mjs'
 
@@ -22,6 +23,7 @@ import { getProducts } from './products.mjs'
  * @returns {Promise<{statusCode: number, payload: object}>}
  */
 export async function handleRecommendRequest(body) {
+  const start = Date.now()
   const { requirements, errors, warnings } = normalizeRequirements(body)
   if (requirements === null) {
     return {
@@ -34,6 +36,7 @@ export async function handleRecommendRequest(body) {
   if (warning !== null) warnings.push(warning)
 
   const result = getRecommendations(requirements, products)
+  const latencyMs = Date.now() - start
 
   return {
     statusCode: 200,
@@ -50,7 +53,8 @@ export async function handleRecommendRequest(body) {
       unmetPreferences: result.unmetPreferences,
       meta: {
         catalogSource: source,
-        warnings: warnings.length > 0 ? warnings : undefined,
+        engineVersion: ENGINE_VERSION,
+        latencyMs,
       },
     },
   }
