@@ -23,7 +23,7 @@
 import { handleRecommendRequest } from './recommend.mjs'
 
 /** Engine version constant - single source of truth. */
-const ENGINE_VERSION = 'buywise-recommendations/1.0.0 (Node.js 20.x)'
+export const ENGINE_VERSION = 'buywise-recommendations/1.0.0 (Node.js 20.x)'
 
 const CORS_HEADERS = (() => {
   // BUYWISE_ALLOWED_ORIGINS: comma-separated list of allowed origins.
@@ -40,10 +40,11 @@ const CORS_HEADERS = (() => {
       'Access-Control-Allow-Headers': 'Content-Type',
     }
   }
-  // Production default: no wildcard — browser will block cross-origin.
+  /** Production default: no wildcard — browser will block cross-origin.
+   In development (no env var), allow permissive CORS for local testing. */
   return {
     'Content-Type': 'application/json; charset=utf-8',
-    'Access-Control-Allow-Origin': '', // empty = block CORS
+    'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
   }
@@ -114,6 +115,10 @@ function proxyResponse(statusCode, payload) {
  *   returns the payload object itself, mirroring the CLI invoke contract).
  */
 export async function handler(event) {
+  if (isDirectInvocation(event)) {
+    return (await handleRecommendRequest(event)).payload
+  }
+
   try {
     const path = eventPath(event)
     const method = eventMethod(event)
@@ -132,21 +137,11 @@ export async function handler(event) {
         timestamp: now,
       })
     }
-      return proxyResponse(200, {
-        status: 'ok',
-        engine: ENGINE_VERSION,
-        catalogSource: source,
-        productCount,
-        timestamp: now,
-      })
-    }
-
     if (method === 'OPTIONS') {
       // CORS preflight (also answered by API Gateway CORS config).
       return { statusCode: 204, headers: CORS_HEADERS, body: '' }
     }
 
-    const path = eventPath(event)
     if (path !== '' && !path.endsWith('/recommend')) {
       return proxyResponse(404, {
         success: false,
