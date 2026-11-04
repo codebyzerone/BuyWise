@@ -16,6 +16,8 @@
  */
 
 import './ResultsView.css'
+import { useState } from 'react'
+import { summarizeRequirements } from '../data/summarizeRequirements.js'
 
 /** Interview use-case ids -> display labels (see laptopInterview.js). */
 const USE_CASE_LABELS = {
@@ -77,6 +79,94 @@ function requirementChips(requirements) {
   return chips
 }
 
+/** Computed match score per ₹10,000 of price: score ÷ price × 10000.
+ * Only when both price and score are known and price > 0. Returns null
+ * when price or score is unknown/zero so no ratio is fabricated. */
+function valueForMoney(score, price) {
+  if (typeof score !== 'number' || typeof price !== 'number' || price <= 0) return null
+  return Math.round((score / price) * 10000 * 10) / 10
+}
+
+/** Factual spec line for comparison tables - only what product data states. */
+function specText(product, field) {
+  switch (field) {
+    case 'price':
+      return typeof product.pricing?.currentPrice === 'number'
+        ? formatPrice(product.pricing.currentPrice)
+        : 'Price not stated'
+    case 'cpu':
+      return typeof product.cpu.model === 'string' && product.cpu.model !== ''
+        ? product.cpu.model
+        : 'CPU not stated'
+    case 'gpu':
+      if (typeof product.gpu.model === 'string' && product.gpu.model !== '') return product.gpu.model
+      if (product.gpu.tier === 'integrated') return 'Integrated graphics'
+      if (product.gpu.tier != null) return `${product.gpu.tier} GPU`
+      return 'GPU not stated'
+    case 'ram':
+      return typeof product.ram?.capacityGb === 'number'
+        ? formatGb(product.ram.capacityGb)
+        : 'RAM not stated'
+    case 'storage':
+      return typeof product.storage?.capacityGb === 'number'
+        ? formatGb(product.storage.capacityGb)
+        : 'Storage not stated'
+    case 'display':
+      if (product.display?.tier != null) return product.display.tier
+      const parts = []
+      if (typeof product.display?.sizeInches === 'number') parts.push(`${product.display.sizeInches}"`)
+      if (product.display?.resolution != null) parts.push(product.display.resolution)
+      if (typeof product.display?.refreshRateHz === 'number') parts.push(`${product.display.refreshRateHz} Hz`)
+      return parts.length > 0 ? parts.join(' · ') : 'Display not stated'
+    case 'weight':
+      return typeof product.physical?.weightKg === 'number'
+        ? `${product.physical.weightKg} kg`
+        : 'Weight not stated'
+    case 'battery':
+      return typeof product.battery?.capacityWh === 'number'
+        ? `${product.battery.capacityWh} Wh`
+        : 'Battery not stated'
+    default:
+      return 'Not stated'
+  }
+}
+
+/** Highest factual value in a column for "best" highlighting.
+ * 'cheapest' = lowest price; 'most' = highest numeric; null when none known. */
+function bestInColumn(rows, field, direction) {
+  const known = rows.filter((r) => {
+    const v = specText(r.product, field)
+    return v !== 'Not stated' && v !== 'Price not stated'
+  })
+  if (known.length === 0) return null
+  return known.reduce((best, row) => {
+    const v = parseFloat(specText(row.product, field).replace(/[^\d.-]/g, ''))
+    if (isNaN(v)) return best
+    if (direction === 'cheapest') return v < best.value ? { value: v, product: row.product } : best
+    return v > best.value ? { value: v, product: row.product } : best
+  }, { value: -Infinity, product: null })
+}
+
+/** Encode a requirements profile into URL query string. No compression needed
+ * for the small profile object; JSON + encodeURIComponent is safe and readable. */
+export function encodeProfileUrl(profile) {
+  if (profile == null || typeof profile !== 'object') return ''
+  return encodeURIComponent(JSON.stringify(profile))
+}
+
+/** Decode a requirements profile from URL query string. Returns null on any
+ * invalid input so the caller can fall back to the landing page. */
+export function decodeProfileUrl(value) {
+  if (typeof value !== 'string' || value === '') return null
+  try {
+    const decoded = JSON.parse(decodeURIComponent(value))
+    if (decoded == null || typeof decoded !== 'object' || Array.isArray(decoded)) return null
+    return decoded
+  } catch {
+    return null
+  }
+}
+
 /** Short factual spec strings - only what the product data actually states. */
 function gpuText(product) {
   if (typeof product.gpu.model === 'string' && product.gpu.model !== '') {
@@ -109,7 +199,13 @@ const memoryText = (product, section) => {
   return type != null ? `${formatGb(capacity)} ${type}` : formatGb(capacity)
 }
 
-function LaptopCard({ recommendation }) {
+function LaptopCard({
+  recommendation,
+  onSelect,
+  isSelected,
+  vfm,
+  breakdown,
+}) {
   const product = recommendation.product
   const purchaseUrl =
     typeof product.source?.productUrl === 'string' &&
@@ -125,9 +221,25 @@ function LaptopCard({ recommendation }) {
     ['Display', displayText(product)],
   ]
 
+  const handleToggle = () => {
+    if (onSelect) onSelect(product.id)
+  }
+
   return (
-    <article className="results-card">
+    <article className={`results-card${isSelected ? ' results-card--selected' : ''}`}>
       <div className="results-card__head">
+        <label
+          className="results-card__select"
+          title={`Add ${[product.brand, product.model].filter(Boolean).join(' ')} or remove from comparison`}
+        >
+          <input
+            type="checkbox"
+            checked={isSelected}
+            onChange={handleToggle}
+            disabled={!isSelected && selectedIds.size >= 3}
+          />
+          <span className="visually-hidden">Select for comparison</span>
+        </label>
         <div>
           <h3 className="results-card__name">
             {[product.brand, product.model].filter(Boolean).join(' ')}
@@ -137,6 +249,11 @@ function LaptopCard({ recommendation }) {
               ? formatPrice(product.pricing.currentPrice)
               : 'Price not stated'}
           </p>
+          {vfm != null && (
+            <p className="results-card__vfm">
+              Match score per ₹10,000 of price: {vfm}
+            </p>
+          )}
         </div>
         <span className="results-card__score" title="Preference match score">
           {recommendation.score} · {recommendation.matchLabel}
@@ -172,6 +289,27 @@ function LaptopCard({ recommendation }) {
             {recommendation.compromises.map((compromise) => (
               <li key={compromise} className="results-card__compromise">
                 ⚠ {compromise}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {breakdown != null && breakdown.length > 0 && (
+        <div className="results-card__section results-card__breakdown">
+          <p className="results-card__section-title">Score breakdown</p>
+          <ul className="results-card__list">
+            {breakdown.map((entry) => (
+              <li key={entry.factor} className="results-card__breakdown-item">
+                <span className="results-card__breakdown-factor">
+                  {capitalize(entry.factor)}
+                </span>
+                <span className="results-card__breakdown-points">
+                  {entry.earned}/{entry.applicable}
+                </span>
+                <span className="results-card__breakdown-note">
+                  {entry.note}
+                </span>
               </li>
             ))}
           </ul>
@@ -216,6 +354,30 @@ export default function ResultsView({ result, requirements, hasError, onRestart 
     result != null && Array.isArray(result.recommendations)
       ? result.recommendations
       : []
+  const [selectedIds, setSelectedIds] = useState(new Set())
+
+  const handleSelect = (id) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev)
+      if (next.has(id)) {
+        next.delete(id)
+      } else if (next.size < 3) {
+        next.add(id)
+      }
+      return next
+    })
+  }
+
+  const handleCopyLink = async () => {
+    const url = buildShareUrl(requirements)
+    if (url === '') return
+    try {
+      await navigator.clipboard.writeText(url)
+    } catch {
+      // Clipboard access may be blocked; URL is still available in the page.
+    }
+  }
+
   const conflicts =
     result != null && Array.isArray(result.conflicts) ? result.conflicts : []
 
@@ -365,13 +527,38 @@ export default function ResultsView({ result, requirements, hasError, onRestart 
         )}
       </header>
 
+      {requirements != null && (
+        <AnswersToRequirements profile={requirements} />
+      )}
+      {selectedIds.size >= 2 && (
+        <ComparisonTable
+          recommendations={recommendations}
+          selectedIds={selectedIds}
+          onSelect={handleSelect}
+        />
+      )}
       <div className="results__grid">
-        {recommendations.map((recommendation) => (
-          <LaptopCard
-            key={recommendation.product.id}
-            recommendation={recommendation}
-          />
-        ))}
+        {recommendations.map((recommendation) => {
+          const isSelected = selectedIds.has(recommendation.product.id)
+          const price =
+            typeof recommendation.product.pricing?.currentPrice === 'number'
+              ? recommendation.product.pricing.currentPrice
+              : null
+          return (
+            <LaptopCard
+              key={recommendation.product.id}
+              recommendation={recommendation}
+              onSelect={handleSelect}
+              isSelected={isSelected}
+              vfm={
+                recommendation.score != null && price != null && price > 0
+                  ? valueForMoney(recommendation.score, price)
+                  : null
+              }
+              breakdown={recommendation.breakdown}
+            />
+          )
+        })}
       </div>
 
       <div className="results__footer">
@@ -382,7 +569,146 @@ export default function ResultsView({ result, requirements, hasError, onRestart 
         >
           Start over
         </button>
+        {selectedIds.size > 0 && (
+          <button
+            type="button"
+            className="question-flow__button question-flow__button--primary"
+            onClick={handleCopyLink}
+          >
+            Copy results link
+          </button>
+        )}
       </div>
     </section>
   )
+}
+
+/** Transparency section: how the user's answers became requirement minimums. */
+function AnswersToRequirements({ profile }) {
+  if (profile == null || typeof profile !== 'object') return null
+
+  const summary = summarizeRequirements(profile)
+  const derived = Array.isArray(profile.derived) ? profile.derived : []
+
+  return (
+    <section className="results__transparency">
+      <h2>How your answers became requirements</h2>
+      <p>
+        Your interview responses were converted into a structured requirements
+        profile. Stated answers are used directly; values marked "suggested"
+        were inferred from your workload and are suggestions, not guarantees.
+      </p>
+      <dl className="results__transparency-list">
+        {summary.map((line) => (
+          <div key={line.key} className="results__transparency-row">
+            <dt>{line.label}</dt>
+            <dd>{line.value}</dd>
+            {line.note != null && (
+              <span className="results__transparency-note">{line.note}</span>
+            )}
+          </div>
+        ))}
+        {derived.length > 0 && (
+          <div className="results__transparency-derived">
+            <p className="results__transparency-derived-title">
+              Inferred from your workload (suggestions):
+            </p>
+            <ul className="results__transparency-derived-list">
+              {derived.map((entry, idx) => (
+                <li key={idx} className="results__transparency-derived-item">
+                  {entry.field}: {entry.reason}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </dl>
+    </section>
+  )
+}
+
+/** Side-by-side comparison table for up to 3 selected recommendations. */
+function ComparisonTable({ recommendations, selectedIds }) {
+  const selected = recommendations.filter((r) => selectedIds.has(r.product.id))
+  if (selected.length < 2) return null
+
+  const columns = [
+    { field: 'price', label: 'Price', direction: 'cheapest' },
+    { field: 'cpu', label: 'CPU' },
+    { field: 'gpu', label: 'GPU' },
+    { field: 'ram', label: 'RAM' },
+    { field: 'storage', label: 'Storage' },
+    { field: 'display', label: 'Display' },
+    { field: 'weight', label: 'Weight' },
+    { field: 'battery', label: 'Battery' },
+  ]
+
+  return (
+    <section className="results__comparison">
+      <h2>Side-by-side comparison</h2>
+      <p>
+        Factual specifications only - "best" highlights are numeric comparisons
+        of stated data, not claims about real-world performance.
+      </p>
+      <table className="results__comparison-table">
+        <thead>
+          <tr>
+            <th>Laptop</th>
+            {columns.map((col) => (
+              <th key={col.field} className="results__comparison-cell">
+                {col.label}
+              </th>
+            ))}
+            <th className="results__comparison-cell">Match score</th>
+          </tr>
+        </thead>
+        <tbody>
+          {selected.map((rec) => (
+            <tr key={rec.product.id} className="results__comparison-row">
+              <td className="results__comparison-name">
+                {[rec.product.brand, rec.product.model]
+                  .filter(Boolean)
+                  .join(' ')}
+              </td>
+              {columns.map((col) => {
+                const best = bestInColumn(selected, col.field, col.direction)
+                const isBest =
+                  best != null &&
+                  rec.product.id === best.product.id &&
+                  selected.length > 1
+                return (
+                  <td
+                    key={col.field}
+                    className={`results__comparison-cell${isBest ? ' results__comparison-best' : ''}`}
+                  >
+                    {specText(rec.product, col.field)}
+                  </td>
+                )
+              })}
+              <td className="results__comparison-cell results__comparison-score">
+                {rec.score}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <div className="results__comparison-notes">
+        <p>
+          Highlighted cells show the factual extreme in each column among the
+          selected laptops where that data is known. No cell is highlighted
+          when no product states a value for that field.
+        </p>
+      </div>
+    </section>
+  )
+}
+
+/** Build a shareable URL from the requirements profile. */
+function buildShareUrl(profile) {
+  if (typeof window === 'undefined' || window.location == null) return ''
+  const encoded = encodeProfileUrl(profile)
+  if (encoded === '') return ''
+  const url = new URL(window.location.href)
+  url.searchParams.set('requirements', encoded)
+  return url.toString()
 }

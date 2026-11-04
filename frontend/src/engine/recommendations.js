@@ -161,6 +161,13 @@ function scoreProduct(requirements, product) {
   const reasons = []
   const compromises = []
   const unknowns = []
+  const breakdown = []
+
+  const breakdownEntry = (factor, weight, earnedPoints, applicablePoints, note) => {
+    breakdown.push({ factor, weight, earned: earnedPoints, applicable: applicablePoints, note })
+    earned += earnedPoints
+    applicable += applicablePoints
+  }
 
   /* Budget ----------------------------------------------------------------- */
   if (
@@ -169,14 +176,18 @@ function scoreProduct(requirements, product) {
   ) {
     const price = product.pricing.currentPrice
     if (typeof price === 'number') {
-      applicable += SCORING_WEIGHTS.budget
       if (price <= requirements.budget.max) {
-        earned += SCORING_WEIGHTS.budget
+        breakdownEntry('budget', SCORING_WEIGHTS.budget, SCORING_WEIGHTS.budget, SCORING_WEIGHTS.budget, `Price ${formatInr(price)} within your ${formatInr(requirements.budget.max)} budget`)
         reasons.push(`Within your ${formatInr(requirements.budget.max)} budget`)
+      } else {
+        breakdownEntry('budget', SCORING_WEIGHTS.budget, 0, SCORING_WEIGHTS.budget, `Price ${formatInr(price)} exceeds your ${formatInr(requirements.budget.max)} budget`)
       }
     } else {
+      breakdownEntry('budget', SCORING_WEIGHTS.budget, 0, 0, 'Price unknown - not scored')
       unknowns.push('price unknown')
     }
+  } else {
+    breakdownEntry('budget', SCORING_WEIGHTS.budget, 0, 0, 'No budget preference - not scored')
   }
 
   /* GPU -------------------------------------------------------------------- */
@@ -186,25 +197,29 @@ function scoreProduct(requirements, product) {
         product.gpu.model != null) ||
       (requirements.gpu.specificModel == null && product.gpu.tier != null)
     if (gpuKnown) {
-      applicable += SCORING_WEIGHTS.gpu
       const label = productGpuLabel(product)
       if (gpuPreferenceMet(requirements, product)) {
-        earned += SCORING_WEIGHTS.gpu
+        breakdownEntry('gpu', SCORING_WEIGHTS.gpu, SCORING_WEIGHTS.gpu, SCORING_WEIGHTS.gpu, label !== null ? `Includes ${label}` : 'Includes a dedicated GPU')
         reasons.push(
           label !== null ? `Includes ${label}` : 'Includes a dedicated GPU',
         )
       } else if (label !== null) {
+        breakdownEntry('gpu', SCORING_WEIGHTS.gpu, 0, SCORING_WEIGHTS.gpu, `Preferred GPU not matched — has ${label}`)
         compromises.push(
           `Preferred GPU (${requirements.gpu.specificModel ?? requirements.gpu.minimumTier ?? 'dedicated'}) not matched — has ${label}`,
         )
       } else {
+        breakdownEntry('gpu', SCORING_WEIGHTS.gpu, 0, SCORING_WEIGHTS.gpu, 'Preferred GPU not matched — no dedicated GPU stated')
         compromises.push(
           `Preferred GPU (${requirements.gpu.specificModel ?? requirements.gpu.minimumTier ?? 'dedicated'}) not matched — no dedicated GPU stated`,
         )
       }
     } else {
+      breakdownEntry('gpu', SCORING_WEIGHTS.gpu, 0, 0, 'GPU unknown - not scored')
       unknowns.push('GPU unknown')
     }
+  } else {
+    breakdownEntry('gpu', SCORING_WEIGHTS.gpu, 0, 0, 'No GPU preference - not scored')
   }
 
   /* RAM -------------------------------------------------------------------- */
@@ -216,19 +231,21 @@ function scoreProduct(requirements, product) {
     const preferred = requirements.ram.preferredGb ?? requirements.ram.minimumGb
     const capacity = product.ram.capacityGb
     if (typeof capacity === 'number') {
-      applicable += SCORING_WEIGHTS.ram
       if (capacity >= preferred) {
-        earned += SCORING_WEIGHTS.ram
+        breakdownEntry('ram', SCORING_WEIGHTS.ram, SCORING_WEIGHTS.ram, SCORING_WEIGHTS.ram, `${formatGb(capacity)} RAM meets your ${formatGb(preferred)} preference`)
         reasons.push(`${formatGb(capacity)} RAM`)
       } else {
-        earned += SCORING_WEIGHTS.ram / 2
+        breakdownEntry('ram', SCORING_WEIGHTS.ram, SCORING_WEIGHTS.ram / 2, SCORING_WEIGHTS.ram, `${formatGb(capacity)} RAM below your ${formatGb(preferred)} preference`)
         compromises.push(
           `Has ${formatGb(capacity)} RAM — below your ${formatGb(preferred)} preference`,
         )
       }
     } else {
+      breakdownEntry('ram', SCORING_WEIGHTS.ram, 0, 0, 'RAM unknown - not scored')
       unknowns.push('RAM unknown')
     }
+  } else {
+    breakdownEntry('ram', SCORING_WEIGHTS.ram, 0, 0, 'No RAM preference - not scored')
   }
 
   /* Storage ------------------------------------------------------------------ */
@@ -241,19 +258,21 @@ function scoreProduct(requirements, product) {
       requirements.storage.preferredGb ?? requirements.storage.minimumGb
     const capacity = product.storage.capacityGb
     if (typeof capacity === 'number') {
-      applicable += SCORING_WEIGHTS.storage
       if (capacity >= preferred) {
-        earned += SCORING_WEIGHTS.storage
+        breakdownEntry('storage', SCORING_WEIGHTS.storage, SCORING_WEIGHTS.storage, SCORING_WEIGHTS.storage, `${formatGb(capacity)} storage meets your ${formatGb(preferred)} preference`)
         reasons.push(`${formatGb(capacity)} storage`)
       } else {
-        earned += SCORING_WEIGHTS.storage / 2
+        breakdownEntry('storage', SCORING_WEIGHTS.storage, SCORING_WEIGHTS.storage / 2, SCORING_WEIGHTS.storage, `${formatGb(capacity)} storage below your ${formatGb(preferred)} preference`)
         compromises.push(
           `Has ${formatGb(capacity)} storage — below your ${formatGb(preferred)} preference`,
         )
       }
     } else {
+      breakdownEntry('storage', SCORING_WEIGHTS.storage, 0, 0, 'Storage unknown - not scored')
       unknowns.push('storage unknown')
     }
+  } else {
+    breakdownEntry('storage', SCORING_WEIGHTS.storage, 0, 0, 'No storage preference - not scored')
   }
 
   /* Display -------------------------------------------------------------------- */
@@ -264,25 +283,28 @@ function scoreProduct(requirements, product) {
   ) {
     const tier = product.display.tier
     if (tier != null) {
-      applicable += SCORING_WEIGHTS.display
       const wanted = displayTierRank(requirements.display.preference)
       const actual = displayTierRank(tier)
       if (actual === wanted) {
-        earned += SCORING_WEIGHTS.display
+        breakdownEntry('display', SCORING_WEIGHTS.display, SCORING_WEIGHTS.display, SCORING_WEIGHTS.display, `${tier} display matches your ${requirements.display.preference} preference`)
         reasons.push(`${tier} display`)
       } else if (wanted >= 0 && actual > wanted) {
-        earned += SCORING_WEIGHTS.display / 2
+        breakdownEntry('display', SCORING_WEIGHTS.display, SCORING_WEIGHTS.display / 2, SCORING_WEIGHTS.display, `${tier} display above your ${requirements.display.preference} preference`)
         reasons.push(
           `${tier} display (above your ${requirements.display.preference} preference)`,
         )
       } else {
+        breakdownEntry('display', SCORING_WEIGHTS.display, 0, SCORING_WEIGHTS.display, `Has a ${tier} display — you preferred ${requirements.display.preference}`)
         compromises.push(
           `Has a ${tier} display — you preferred ${requirements.display.preference}`,
         )
       }
     } else {
+      breakdownEntry('display', SCORING_WEIGHTS.display, 0, 0, 'Display quality unknown - not scored')
       unknowns.push('display quality unknown')
     }
+  } else {
+    breakdownEntry('display', SCORING_WEIGHTS.display, 0, 0, 'No display preference - not scored')
   }
 
   /* OS --------------------------------------------------------------------------- */
@@ -292,18 +314,21 @@ function scoreProduct(requirements, product) {
     requirements.os.preferred != null
   ) {
     if (product.os != null) {
-      applicable += SCORING_WEIGHTS.os
       if (product.os === requirements.os.preferred) {
-        earned += SCORING_WEIGHTS.os
+        breakdownEntry('os', SCORING_WEIGHTS.os, SCORING_WEIGHTS.os, SCORING_WEIGHTS.os, `Ships with ${product.os} — matches your preference`)
         reasons.push(`Ships with ${product.os}`)
       } else {
+        breakdownEntry('os', SCORING_WEIGHTS.os, 0, SCORING_WEIGHTS.os, `Ships with ${product.os} — you preferred ${requirements.os.preferred}`)
         compromises.push(
           `Ships with ${product.os} — you preferred ${requirements.os.preferred}`,
         )
       }
     } else {
+      breakdownEntry('os', SCORING_WEIGHTS.os, 0, 0, 'Operating system unknown - not scored')
       unknowns.push('operating system unknown')
     }
+  } else {
+    breakdownEntry('os', SCORING_WEIGHTS.os, 0, 0, 'No OS preference - not scored')
   }
 
   /* Portability -------------------------------------------------------------------- */
@@ -315,18 +340,21 @@ function scoreProduct(requirements, product) {
     const limit = PORTABILITY_LIMITS[requirements.portability.priority]
     const weight = product.physical.weightKg
     if (typeof weight === 'number') {
-      applicable += SCORING_WEIGHTS.portability
       if (weight <= limit) {
-        earned += SCORING_WEIGHTS.portability
+        breakdownEntry('portability', SCORING_WEIGHTS.portability, SCORING_WEIGHTS.portability, SCORING_WEIGHTS.portability, `${weight} kg — easy to carry`)
         reasons.push(`${weight} kg — easy to carry`)
       } else {
+        breakdownEntry('portability', SCORING_WEIGHTS.portability, 0, SCORING_WEIGHTS.portability, `${weight} kg — heavier than your portability preference`)
         compromises.push(
           `${weight} kg — heavier than your portability preference`,
         )
       }
     } else {
+      breakdownEntry('portability', SCORING_WEIGHTS.portability, 0, 0, 'Weight unknown - not scored')
       unknowns.push('weight unknown')
     }
+  } else {
+    breakdownEntry('portability', SCORING_WEIGHTS.portability, 0, 0, 'No portability preference - not scored')
   }
 
   /* Battery --------------------------------------------------------------------------- */
@@ -338,18 +366,21 @@ function scoreProduct(requirements, product) {
     const limit = BATTERY_LIMITS[requirements.battery.priority]
     const capacityWh = product.battery.capacityWh
     if (typeof capacityWh === 'number') {
-      applicable += SCORING_WEIGHTS.battery
       if (capacityWh >= limit) {
-        earned += SCORING_WEIGHTS.battery
+        breakdownEntry('battery', SCORING_WEIGHTS.battery, SCORING_WEIGHTS.battery, SCORING_WEIGHTS.battery, `${capacityWh} Wh battery meets your preference`)
         reasons.push(`${capacityWh} Wh battery`)
       } else {
+        breakdownEntry('battery', SCORING_WEIGHTS.battery, 0, SCORING_WEIGHTS.battery, `${capacityWh} Wh battery — smaller than your battery preference`)
         compromises.push(
           `${capacityWh} Wh battery — smaller than your battery preference`,
         )
       }
     } else {
+      breakdownEntry('battery', SCORING_WEIGHTS.battery, 0, 0, 'Battery capacity unknown - not scored')
       unknowns.push('battery capacity unknown')
     }
+  } else {
+    breakdownEntry('battery', SCORING_WEIGHTS.battery, 0, 0, 'No battery preference - not scored')
   }
 
   /* Hard-requirement highlights (facts only - NO points). Strict fields are
@@ -383,7 +414,7 @@ function scoreProduct(requirements, product) {
     )
   }
 
-  return { earned, applicable, reasons, compromises, unknowns }
+  return { earned, applicable, breakdown, reasons, compromises, unknowns }
 }
 
 /** Deterministic match-quality label - never "best". */
@@ -639,7 +670,9 @@ function requirementFit(requirements, product) {
  * @param {object[]} products - normalized catalog.
  * @returns {Array<{product: object, score: number, matchLabel: string,
  *   reasons: string[], compromises: string[], unknowns: string[],
- *   deviations: string[], satisfiedCount: number}>} at most 3 items.
+ *   breakdown: Array<{factor: string, weight: number, earned: number,
+ *   applicable: number, note: string}>, deviations: string[],
+ *   satisfiedCount: number}>} at most 3 items.
  */
 export function findClosestMatches(requirements, products) {
   return (Array.isArray(products) ? products : [])
@@ -662,6 +695,7 @@ export function findClosestMatches(requirements, products) {
           ...new Set([...scored.compromises, ...fit.deviations, ...fit.gaps]),
         ],
         unknowns: scored.unknowns,
+        breakdown: scored.breakdown,
         deviations: fit.deviations,
         satisfiedCount: fit.satisfiedCount,
       }
@@ -684,7 +718,9 @@ export function findClosestMatches(requirements, products) {
  * @param {object} requirements - normalized Buyer Requirements Profile.
  * @param {object[]} feasibleProducts - products returned by feasibility.js.
  * @returns {Array<{product: object, score: number, matchLabel: string,
- *   reasons: string[], compromises: string[], unknowns: string[]}>}
+ *   reasons: string[], compromises: string[], unknowns: string[],
+ *   breakdown: Array<{factor: string, weight: number, earned: number,
+ *   applicable: number, note: string}>}>}
  */
 export function recommendProducts(requirements, feasibleProducts) {
   return (Array.isArray(feasibleProducts) ? feasibleProducts : [])
@@ -701,6 +737,7 @@ export function recommendProducts(requirements, feasibleProducts) {
         reasons: scored.reasons,
         compromises: scored.compromises,
         unknowns: scored.unknowns,
+        breakdown: scored.breakdown,
       }
     })
     .sort(compareRecommendations)
@@ -718,7 +755,9 @@ export function recommendProducts(requirements, feasibleProducts) {
  * @returns {{
  *   feasible: boolean,
  *   recommendations: Array<{product: object, score: number, matchLabel: string,
- *     reasons: string[], compromises: string[], unknowns: string[]}>,
+ *     reasons: string[], compromises: string[], unknowns: string[],
+ *     breakdown: Array<{factor: string, weight: number, earned: number,
+ *     applicable: number, note: string}>}>,
  *   conflicts: Array<{field: string, reason: string}>,
  *   unmetPreferences: Array<{field: string, expected: unknown, actual: unknown}>,
  * }}

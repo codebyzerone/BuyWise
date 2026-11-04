@@ -1,6 +1,8 @@
-import { Component, useState } from 'react'
+import { Component, useEffect, useState } from 'react'
 import QuestionFlow from './components/QuestionFlow.jsx'
-import ResultsView from './components/ResultsView.jsx'
+import ResultsView, {
+  decodeProfileUrl,
+} from './components/ResultsView.jsx'
 import LandingPage from './components/LandingPage.jsx'
 import { laptopInterviewQuestions } from './data/laptopInterview.js'
 import { buildRequirements } from './data/buildRequirements.js'
@@ -82,6 +84,23 @@ function App() {
   const [runId, setRunId] = useState(0)
   const [isRecommending, setIsRecommending] = useState(false)
   const [showLanding, setShowLanding] = useState(true)
+
+  /* PHASE D: On mount, attempt to restore a previously-shared requirements
+   * profile from the URL query string. This is purely client-side; no backend
+   * round-trip, no tracking. The profile contains no names or contact details.
+   */
+  useEffect(() => {
+    if (showLanding) return // only restore when inside the interview flow
+    const urlParams = new URLSearchParams(window.location.search)
+    const encoded = urlParams.get('requirements')
+    if (encoded != null && encoded !== '') {
+      const profile = decodeProfileUrl(encoded)
+      if (profile != null) {
+        setRequirements(profile)
+        setShowLanding(false) // transition straight to interview if profile valid
+      }
+    }
+  }, [showLanding])
 
   /** Landing CTA -> hand over to the EXISTING interview flow. */
   const startInterview = () => setShowLanding(false)
