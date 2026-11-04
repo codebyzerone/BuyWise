@@ -28,7 +28,11 @@ export const mockProducts = [
       checkedAt: '2024-01-15T00:00:00.000Z',
     },
 
-    offers: [],
+    // Two synthetic offers for testing multi-retailer display (Phase 4).
+    offers: [
+      { retailer: 'test-retailer-a', currency: 'INR', price: 52000, url: 'https://example.com/buywise-test/01-a', checkedAt: '2024-10-01T00:00:00.000Z' },
+      { retailer: 'test-retailer-b', currency: 'INR', price: 58000, url: 'https://example.com/buywise-test/01-b', checkedAt: '2024-10-02T00:00:00.000Z' },
+    ],
 
     cpu: {
       brand: 'Intel',

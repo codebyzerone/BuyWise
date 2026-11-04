@@ -87,6 +87,22 @@ function valueForMoney(score, price) {
   return Math.round((score / price) * 10000 * 10) / 10
 }
 
+/** Check if a price date is stale (older than 90 days or missing). */
+function priceStalenessWarning(checkedAt) {
+  if (checkedAt == null) return 'Price check date not stated'
+  const checkedDate = new Date(checkedAt)
+  const now = new Date()
+  const diffDays = Math.floor((now - checkedDate) / (1000 * 60 * 60 * 24))
+  if (diffDays > 90) return `Price last checked: ${formatDate(checkedAt)} (${diffDays} days ago)`
+  return null
+}
+
+/** Format a checkedAt date into a readable string. */
+function formatDate(isoString) {
+  const date = new Date(isoString)
+  return `${date.getDate()} ${date.toLocaleMonthString()} ${date.getFullYear()}`
+}
+
 /** Factual spec line for comparison tables - only what product data states. */
 function specText(product, field) {
   switch (field) {
